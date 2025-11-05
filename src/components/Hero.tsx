@@ -153,8 +153,9 @@ const Hero = () => {
                   variant="outline"
                   size="lg"
                   className="font-semibold px-8 border-2 hover:bg-foreground hover:text-background transition-all"
+                  onClick={() => window.open('https://app.enhancv.com/share/75a20562/?utm_medium=growth&utm_campaign=share-resume&utm_source=dynamic', '_blank')}
                 >
-                  Download CV
+                  View CV
                   <Download className="w-4 h-4 ml-2" />
                 </Button>
               </motion.div>
@@ -168,11 +169,11 @@ const Hero = () => {
               >
                 <div>
                   <p className="text-xs font-bold text-primary mb-1 uppercase tracking-wider">Email</p>
-                  <p className="text-xs text-foreground font-medium">akshat@example.com</p>
+                  <p className="text-xs text-foreground font-medium">akshatx03x@gmail.com</p>
                 </div>
                 <div>
                   <p className="text-xs font-bold text-primary mb-1 uppercase tracking-wider">Phone</p>
-                  <p className="text-xs text-foreground font-medium">+91-XXX-XXX</p>
+                  <p className="text-xs text-foreground font-medium">+91-88822 18584</p>
                 </div>
                 <div>
                   <p className="text-xs font-bold text-primary mb-1 uppercase tracking-wider">Location</p>
@@ -209,7 +210,7 @@ const Hero = () => {
               >
                 <div className="relative w-full h-full">
                   <img
-                    src={profilePhoto}
+                    src= "https://archive.smashing.media/assets/344dbf88-fdf9-42bb-adb4-46f01eedd629/0fe015ce-47e5-4692-a52e-73b05a4658af/illustrator-artworks-showcase-81.jpg  "
                     alt="Akshat Gupta"
                     className="w-full h-full object-cover rounded-3xl shadow-2xl"
                   />
@@ -240,8 +241,8 @@ const Hero = () => {
                 <div className="flex items-center gap-3">
                   <Sparkles className="w-5 h-5" />
                   <div>
-                    <p className="text-sm font-bold">CS Student</p>
-                    <p className="text-xs opacity-90">Batch 2028</p>
+                    <p className="text-sm font-bold">Software Developer</p>
+                    <p className="text-xs opacity-90">C++ & Python</p>
                   </div>
                 </div>
               </motion.div>
@@ -318,8 +319,8 @@ const Hero = () => {
       >
         <div className="flex flex-col items-center gap-4">
           {[
-            { icon: Github, href: "https://github.com" },
-            { icon: Linkedin, href: "https://linkedin.com" },
+            { icon: Github, href: "https://github.com/akshatx03x" },
+            { icon: Linkedin, href: "https://www.linkedin.com/in/akshat-undefined-7a5317375/" },
             { icon: Mail, href: "mailto:akshat@example.com" },
           ].map((social, index) => (
             <motion.a

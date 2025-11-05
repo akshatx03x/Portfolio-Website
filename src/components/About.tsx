@@ -87,14 +87,14 @@ const About = () => {
                   Akshat Gupta
                 </span>
                 , a passionate Computer Science and Engineering student at
-                Maharaja Agrasen Institute of Technology (Batch of 2028). I love
-                turning ideas into interactive web experiences and intelligent
+                Maharaja Agrasen Institute of Technology (Batch 2k24-28). I love
+                turning ideas into interactive  experiences and intelligent
                 systems — blending creativity with code.
               </p>
               <p className="text-lg text-foreground/90 leading-relaxed">
                 My journey in tech is driven by curiosity and innovation.
                 Whether it's building full-stack web applications with the MERN
-                stack, creating mobile experiences with React Native, or
+                stack or Next.js, creating mobile experiences with React Native, or
                 experimenting with AI/ML, I'm always eager to learn and push
                 boundaries.
               </p>

@@ -7,6 +7,7 @@ import { Mail, Phone, MapPin, Github, Linkedin, Twitter, Send } from "lucide-rea
 import { toast } from "sonner";
 import { motion } from "framer-motion";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
+import emailjs from '@emailjs/browser';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -18,7 +19,18 @@ const Contact = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    toast.success("Message sent! I'll get back to you soon.");
+
+    // Create mailto link with form data
+    const subject = encodeURIComponent(`Portfolio Contact: ${formData.name}`);
+    const body = encodeURIComponent(
+      `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+    );
+    const mailtoLink = `mailto:akshatx03x@gmail.com?subject=${subject}&body=${body}`;
+
+    // Open default email client
+    window.location.href = mailtoLink;
+
+    toast.success("Opening your email client...");
     setFormData({ name: "", email: "", message: "" });
   };
 
@@ -169,8 +181,8 @@ const Contact = () => {
                 {
                   icon: Mail,
                   title: "Email",
-                  info: "akshat.gupta@example.com",
-                  link: "mailto:akshat.gupta@example.com",
+                  info: "akshatx03x@gmail.com",
+                  link: "mailto:akshatx03x@gmail.com",
                   linkText: "Send an email",
                   color: "primary",
                   delay: 0.2,
@@ -178,8 +190,8 @@ const Contact = () => {
                 {
                   icon: Phone,
                   title: "Phone",
-                  info: "+91-XXX-XXX-XXXX",
-                  link: "tel:+91XXXXXXXXXX",
+                  info: "+91-88822 18584",
+                  link: "tel:+918882218584",
                   linkText: "Give me a call",
                   color: "accent",
                   delay: 0.3,
@@ -241,9 +253,9 @@ const Contact = () => {
                 </h3>
                 <div className="flex justify-center gap-4">
                   {[
-                    { icon: Github, href: "https://github.com", label: "GitHub" },
-                    { icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
-                    { icon: Twitter, href: "https://twitter.com", label: "Twitter" },
+                    { icon: Github, href: "https://github.com/akshatx03x", label: "GitHub" },
+                    { icon: Linkedin, href: "https://www.linkedin.com/in/akshatx03x/", label: "LinkedIn" },
+                    { icon: Twitter, href: "https://x.com/akshatx03x", label: "Twitter" },
                   ].map((social, index) => (
                     <motion.a
                       key={social.label}

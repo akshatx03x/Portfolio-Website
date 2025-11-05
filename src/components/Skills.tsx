@@ -150,7 +150,7 @@ const Skills = () => {
           >
             <p className="text-muted-foreground">
               Also exploring:{" "}
-              {["DSA", "System Design", "DevOps"].map((item, index) => (
+              {["DSA", "System Design", "DevOps & Cloud-Computing"].map((item, index) => (
                 <motion.span
                   key={item}
                   className="text-primary font-semibold"

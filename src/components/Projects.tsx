@@ -6,43 +6,47 @@ import { ExternalLink, Github, Star } from "lucide-react";
 import { motion } from "framer-motion";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
-// Placeholder projects - will be replaced with GitHub API integration
+// Pinned GitHub repositories data
 const projects = [
   {
     id: 1,
-    name: "E-Commerce Platform",
-    description:
-      "Full-stack MERN application with authentication, payment integration, and admin dashboard",
-    tags: ["React", "Node.js", "MongoDB", "Express"],
-    stars: 24,
+    name: "Chatlify",
+    description: "Chat application with real-time messaging features",
+    tags: ["JavaScript"],
+    stars: 1,
     featured: true,
+    githubUrl: "https://github.com/akshatx03x/Chatlify",
+    demoUrl: "https://chatlify-dosw.onrender.com/",
   },
   {
     id: 2,
-    name: "AI Task Manager",
-    description:
-      "Smart task management app with AI-powered categorization and priority suggestions",
-    tags: ["Next.js", "TypeScript", "AI/ML", "Tailwind"],
-    stars: 18,
+    name: "ConvoSpace",
+    description: "💻 CollabConnect is a MERN + WebRTC-based collaboration platform that brings teams together through seamless 🎥 video calls, 📂 file sharing, and 📝 shared notepads. Integrated with 🤖 OpenAI and Gemini, it allows users to ask questions, discuss ideas, and get instant insights — making learning and teamwork more interactive and productive.",
+    tags: ["JavaScript"],
+    stars: 1,
     featured: true,
+    githubUrl: "https://github.com/akshatx03x/ConvoSpace",
+    demoUrl: "https://convospace-mu.vercel.app",
   },
   {
     id: 3,
-    name: "Weather App",
-    description:
-      "Mobile weather application with location-based forecasts and beautiful UI",
-    tags: ["React Native", "APIs", "Mobile"],
-    stars: 12,
-    featured: false,
+    name: "GemScribe",
+    description: "Gemscribe ✨ is a MERN-based app that generates professional READMEs 📄 with Gemini 2.0 Flash API ⚡. It fetches GitHub repos 🐙, provides repo links 🔗, and answers your queries 💬 — all from a sleek dashboard 📊. Secure login 🔒 via Google 🌐 and GitHub makes it simple and reliable.",
+    tags: ["JavaScript"],
+    stars: 1,
+    featured: true,
+    githubUrl: "https://github.com/akshatx03x/GemScribe",
+    demoUrl: "https://gemscribe.onrender.com/",
   },
   {
     id: 4,
-    name: "Code Snippet Manager",
-    description:
-      "Developer tool for organizing and sharing code snippets with syntax highlighting",
-    tags: ["React", "Firebase", "TypeScript"],
-    stars: 15,
-    featured: false,
+    name: "UrbanCart",
+    description: "A modern e-commerce platform built with cutting-edge technologies",
+    tags: ["JavaScript"],
+    stars: 1,
+    featured: true,
+    githubUrl: "https://github.com/akshatx03x/UrbanCart",
+    demoUrl: null,
   },
 ];
 
@@ -127,84 +131,93 @@ const Projects = () => {
             </motion.div>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {filteredProjects.map((project, idx) => (
               <motion.div
                 key={project.id}
-                className={project.featured ? "md:col-span-2" : ""}
                 initial={{ opacity: 0, y: 30 }}
                 animate={isVisible ? { opacity: 1, y: 0 } : {}}
                 transition={{ delay: idx * 0.1, duration: 0.6 }}
                 whileHover={{ y: -5 }}
               >
-                <Card className="p-6 h-full hover:shadow-2xl transition-all border-border/50 hover:border-primary/30 bg-card/50 backdrop-blur group">
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="flex-1">
-                      <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors">
-                        {project.name}
-                      </h3>
-                      <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
-                        {project.description}
-                      </p>
-                    </div>
-                    {project.featured && (
-                      <motion.div
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{ delay: 0.5, type: "spring" }}
-                      >
-                        <Badge
-                          variant="secondary"
-                          className="ml-4 bg-primary/10 text-primary"
+                <Card className="p-6 h-80 hover:shadow-2xl transition-all border-border/50 hover:border-primary/30 bg-card/50 backdrop-blur group overflow-hidden">
+                  <div className="flex flex-col h-full">
+                    <div className="flex items-start justify-between mb-4">
+                      <div className="flex-1">
+                        <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors">
+                          {project.name}
+                        </h3>
+                        <p className="text-muted-foreground text-sm mb-4 leading-relaxed line-clamp-3">
+                          {project.description || "No description available"}
+                        </p>
+                      </div>
+                      {project.featured && (
+                        <motion.div
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          transition={{ delay: 0.5, type: "spring" }}
                         >
-                          Featured
-                        </Badge>
-                      </motion.div>
-                    )}
-                  </div>
-
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {project.tags.map((tag, tagIdx) => (
-                      <motion.div
-                        key={tag}
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={isVisible ? { opacity: 1, scale: 1 } : {}}
-                        transition={{ delay: idx * 0.1 + tagIdx * 0.05 }}
-                      >
-                        <Badge
-                          variant="outline"
-                          className="text-xs hover:bg-primary/10 transition-colors"
-                        >
-                          {tag}
-                        </Badge>
-                      </motion.div>
-                    ))}
-                  </div>
-
-                  <div className="flex items-center justify-between pt-4 border-t border-border">
-                    <div className="flex items-center gap-2 text-muted-foreground">
-                      <Star className="w-4 h-4 fill-primary text-primary" />
-                      <span className="text-sm font-medium">
-                        {project.stars}
-                      </span>
+                          <Badge
+                            variant="secondary"
+                            className="ml-4 bg-primary/10 text-primary"
+                          >
+                            Featured
+                          </Badge>
+                        </motion.div>
+                      )}
                     </div>
-                    <div className="flex gap-2">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="gap-2 hover:text-primary"
-                      >
-                        <Github className="w-4 h-4" />
-                        Code
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="gap-2 hover:text-primary"
-                      >
-                        <ExternalLink className="w-4 h-4" />
-                        Demo
-                      </Button>
+
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {project.tags.map((tag, tagIdx) => (
+                        <motion.div
+                          key={tag}
+                          initial={{ opacity: 0, scale: 0.8 }}
+                          animate={isVisible ? { opacity: 1, scale: 1 } : {}}
+                          transition={{ delay: idx * 0.1 + tagIdx * 0.05 }}
+                        >
+                          <Badge
+                            variant="outline"
+                            className="text-xs hover:bg-primary/10 transition-colors"
+                          >
+                            {tag}
+                          </Badge>
+                        </motion.div>
+                      ))}
+                    </div>
+
+                    <div className="flex items-center justify-between pt-4 border-t border-border mt-auto">
+                      <div className="flex items-center gap-2 text-muted-foreground">
+                        <Star className="w-4 h-4 fill-primary text-primary" />
+                        <span className="text-sm font-medium">
+                          {project.stars}
+                        </span>
+                      </div>
+                      <div className="flex gap-2">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="gap-2 hover:text-primary"
+                          asChild
+                        >
+                          <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+                            <Github className="w-4 h-4" />
+                            Code
+                          </a>
+                        </Button>
+                        {project.demoUrl && (
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="gap-2 hover:text-primary"
+                            asChild
+                          >
+                            <a href={project.demoUrl} target="_blank" rel="noopener noreferrer">
+                              <ExternalLink className="w-4 h-4" />
+                              Demo
+                            </a>
+                          </Button>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </Card>
@@ -221,9 +234,11 @@ const Projects = () => {
             <p className="text-muted-foreground mb-4">
               Want to see more? Check out my GitHub for all projects
             </p>
-            <Button variant="outline" size="lg" className="gap-2 hover:shadow-lg">
-              <Github className="w-5 h-5" />
-              View GitHub Profile
+            <Button variant="outline" size="lg" className="gap-2 hover:shadow-lg" asChild>
+              <a href="https://github.com/akshatx03x" target="_blank" rel="noopener noreferrer">
+                <Github className="w-5 h-5" />
+                View GitHub Profile
+              </a>
             </Button>
           </motion.div>
         </div>
