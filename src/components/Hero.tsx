@@ -105,11 +105,10 @@ const Hero = () => {
 
                 {/* Decorative curved text */}
                 <motion.div
-                  className="absolute -right-8 top-8 text-xs font-medium text-muted-foreground tracking-wider"
+                  className="absolute -right-8 top-8 text-xs font-medium text-muted-foreground tracking-wider origin-left"
                   initial={{ opacity: 0, rotate: -90 }}
                   animate={{ opacity: 1, rotate: -90 }}
                   transition={{ delay: 0.8 }}
-                  style={{ transformOrigin: "left center" }}
                 >
                   DEVELOPER • INNOVATOR • CREATOR
                 </motion.div>
@@ -192,11 +191,7 @@ const Hero = () => {
               {/* Massive "A" letter */}
               <div className="absolute inset-0 flex items-center justify-center">
                 <motion.div
-                  className="text-[25rem] md:text-[30rem] lg:text-[35rem] font-black leading-none select-none"
-                  style={{
-                    WebkitTextStroke: "2px hsl(var(--border))",
-                    color: "transparent",
-                  }}
+                  className="text-[25rem] md:text-[30rem] lg:text-[35rem] font-black leading-none select-none text-transparent [-webkit-text-stroke:2px_hsl(var(--border))]"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.7 }}
