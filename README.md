@@ -1,73 +1,79 @@
-# Welcome to your Lovable project
+Akshat Gupta – Full Stack Developer & CS Student
 
-## Project info
+A clean, modern personal portfolio built with Next.js and hosted on Vercel
 
-**URL**: https://lovable.dev/projects/54e11446-216e-494b-bb98-43d3d12f36e5
+🚀 Why this site exists
 
-## How can I edit this code?
+This portfolio is designed to showcase my skills, projects, and journey as a full-stack developer and second-year engineering student. It’s not just a static resume — it’s a live demo of my capabilities: how I build, deploy, and present my work.
 
-There are several ways of editing your application.
+🎯 What you’ll find
 
-**Use Lovable**
+Interactive about section detailing who I am, what I do, and my technical interests.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/54e11446-216e-494b-bb98-43d3d12f36e5) and start prompting.
+A dedicated projects section featuring full-stack, MERN/Next.js, AI-/cloud-integrated work.
 
-Changes made via Lovable will be committed automatically to this repo.
+Resume download or link.
 
-**Use your preferred IDE**
+Contact info and links to my GitHub, LinkedIn, and other social handles.
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+Responsive design and smooth user experience — built to impress recruiters, internship mentors and interviewers.
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+🧰 Tech Stack
 
-Follow these steps:
+Frontend: Next.js (React), TypeScript, styled components/modern CSS.
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+Deployment: Vercel (free-tier, fast global CDN).
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+Optional integrations: GitHub for code hosting, analytics/tracking, performance monitoring.
 
-# Step 3: Install the necessary dependencies.
-npm i
+📥 Getting Started
+Prerequisites
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+Node.js (v16+) & npm/yarn/pnpm.
+
+Basic familiarity with React/Next.js.
+
+Setup
+git clone https://github.com/akshatx03x/your-portfolio-repo.git
+cd your-portfolio-repo
+npm install   # or yarn / pnpm
+
+Configure environment (if needed)
+
+If you have any API keys or environment variables (for analytics or contact form), add a .env.local file:
+
+NEXT_PUBLIC_CONTACT_FORM_ENDPOINT = <your-endpoint>
+
+Run locally
 npm run dev
-```
+# or
+yarn dev
 
-**Edit a file directly in GitHub**
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+Then open http://localhost:3000
+ in your browser.
 
-**Use GitHub Codespaces**
+Build & deploy
+npm run build
+npm start
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
 
-## What technologies are used for this project?
+You can deploy easily on Vercel by linking your GitHub repository — it will build automatically and publish.
 
-This project is built with:
+🧩 Structure Overview
+/app                   – Next.js pages or “app” directory  
+/components            – UI components (header, footer, project card, etc)  
+/styles                – Global styles / theme  
+/public                – Static assets (images, icons)  
+/next.config.js        – Next.js configuration  
+/tsconfig.json         – TypeScript config  
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+✅ Why this site makes an impact
 
-## How can I deploy this project?
+Demonstrates your ability to design, build and deploy a modern web app (not just code snippets).
 
-Simply open [Lovable](https://lovable.dev/projects/54e11446-216e-494b-bb98-43d3d12f36e5) and click on Share -> Publish.
+Offers a single URL recruiters/interviewers can visit to see your work live.
 
-## Can I connect a custom domain to my Lovable project?
+Shows you are serious about full-stack development and personal branding.
 
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+Works across devices and is optimized for performance and clarity
