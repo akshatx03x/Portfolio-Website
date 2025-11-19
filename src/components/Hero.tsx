@@ -1,360 +1,144 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
-import { Github, Linkedin, Mail, Download, ArrowDown, Code, Sparkles } from "lucide-react";
-import profilePhoto from "@/assets/profile-photo.jpg";
-import brushStroke from "@/assets/brush-stroke.png";
+import { ArrowDown } from "lucide-react";
+import Spline from "@splinetool/react-spline";
 import { motion } from "framer-motion";
+
+const textVariant = {
+  hidden: { opacity: 0, y: 20 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: [0, 0, 0.58, 1] },
+  },
+};
+
+const letterVariant = {
+  hidden: { opacity: 0, y: 30 },
+  show: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.06, duration: 0.5 },
+  }),
+};
 
 const Hero = () => {
   const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
+    const el = document.getElementById(sectionId);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
+  const heading = "Akshat";
+
   return (
-    <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20 pb-12">
-      {/* Minimalist background */}
-      <div className="absolute inset-0 bg-background" />
-      
-      {/* Floating decorative elements */}
-      <motion.div
-        className="absolute top-32 left-[15%] w-2 h-2 rounded-full bg-primary"
-        animate={{
-          y: [0, -20, 0],
-          opacity: [0.5, 1, 0.5],
-        }}
-        transition={{
-          duration: 3,
-          repeat: Infinity,
-        }}
-      />
-      <motion.div
-        className="absolute top-1/4 right-[20%] w-3 h-3 rounded-full bg-accent"
-        animate={{
-          y: [0, 15, 0],
-          opacity: [0.3, 0.8, 0.3],
-        }}
-        transition={{
-          duration: 4,
-          repeat: Infinity,
-        }}
-      />
-      <motion.div
-        className="absolute bottom-1/3 left-[25%] w-2 h-2 rounded-full bg-primary"
-        animate={{
-          scale: [1, 1.5, 1],
-          opacity: [0.4, 1, 0.4],
-        }}
-        transition={{
-          duration: 2.5,
-          repeat: Infinity,
-        }}
-      />
+    <section className="relative w-full min-h-screen flex items-center overflow-hidden px-6 pt-20 bg-black">
 
-      <div className="container mx-auto px-6 relative z-10">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            {/* Left side - Bold Typography */}
-            <motion.div
-              className="space-y-8 relative"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8 }}
-            >
-              {/* Greeting */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="flex items-center gap-3"
-              >
-                <div className="w-12 h-[2px] bg-primary" />
-                <p className="text-muted-foreground text-sm font-medium tracking-widest uppercase">
-                  Hi There, Welcome
-                </p>
-              </motion.div>
-
-              {/* Main heading with creative styling */}
-              <div className="relative">
-                <motion.h1
-                  className="text-[4rem] md:text-[5.5rem] lg:text-[6.5rem] font-black leading-[0.9] tracking-tight"
-                  initial={{ opacity: 0, x: -50 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.4, duration: 0.8 }}
-                >
-                  <span className="block text-foreground">I am</span>
-                  <span className="block relative">
-                    <span className="text-foreground">Aksh</span>
-                    <span className="relative inline-block">
-                      <span className="text-foreground">a</span>
-                      <motion.span
-                        className="absolute -top-1 -right-1 w-3 h-3 bg-primary rounded-full"
-                        animate={{
-                          scale: [1, 1.3, 1],
-                        }}
-                        transition={{
-                          duration: 2,
-                          repeat: Infinity,
-                        }}
-                      />
-                    </span>
-                    <span className="text-primary">t</span>
-                  </span>
-                </motion.h1>
-
-                {/* Decorative curved text */}
-                <motion.div
-                  className="absolute -right-8 top-8 text-xs font-medium text-muted-foreground tracking-wider origin-left"
-                  initial={{ opacity: 0, rotate: -90 }}
-                  animate={{ opacity: 1, rotate: -90 }}
-                  transition={{ delay: 0.8 }}
-                >
-                  DEVELOPER • INNOVATOR • CREATOR
-                </motion.div>
-              </div>
-
-              {/* Subheading with creative line breaks */}
-              <motion.div
-                className="space-y-2"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 }}
-              >
-                <h2 className="text-2xl md:text-3xl font-bold leading-tight">
-                  I craft <span className="text-primary italic">interactive</span>
-                </h2>
-                <h2 className="text-2xl md:text-3xl font-bold leading-tight">
-                  web experiences
-                </h2>
-                <p className="text-lg text-muted-foreground flex items-center gap-2">
-                  <span className="text-accent font-semibold">&</span>
-                  <span>build intelligent systems during nights.</span>
-                </p>
-              </motion.div>
-
-              {/* CTA Buttons */}
-              <motion.div
-                className="flex flex-wrap gap-4 pt-4"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.8 }}
-              >
-                <Button
-                  variant="default"
-                  size="lg"
-                  onClick={() => scrollToSection("portfolio")}
-                  className="bg-primary text-white hover:bg-primary/90 font-semibold px-8 shadow-xl hover:shadow-2xl transition-all group"
-                >
-                  View My Work
-                  <ArrowDown className="w-4 h-4 ml-2 group-hover:translate-y-1 transition-transform" />
-                </Button>
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="font-semibold px-8 border-2 hover:bg-foreground hover:text-background transition-all"
-                  onClick={() => window.open('https://app.enhancv.com/share/75a20562/?utm_medium=growth&utm_campaign=share-resume&utm_source=dynamic', '_blank')}
-                >
-                  View CV
-                  <Download className="w-4 h-4 ml-2" />
-                </Button>
-              </motion.div>
-
-              {/* Contact info - minimalist style */}
-              <motion.div
-                className="grid grid-cols-3 gap-8 pt-8 border-t-2 border-border"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1 }}
-              >
-                <div>
-                  <p className="text-xs font-bold text-primary mb-1 uppercase tracking-wider">Email</p>
-                  <p className="text-xs text-foreground font-medium">akshatx03x@gmail.com</p>
-                </div>
-                <div>
-                  <p className="text-xs font-bold text-primary mb-1 uppercase tracking-wider">Phone</p>
-                  <p className="text-xs text-foreground font-medium">+91-88822 18584</p>
-                </div>
-                <div>
-                  <p className="text-xs font-bold text-primary mb-1 uppercase tracking-wider">Location</p>
-                  <p className="text-xs text-foreground font-medium">New Delhi, IN</p>
-                </div>
-              </motion.div>
-            </motion.div>
-
-            {/* Right side - Creative photo integration with large "A" */}
-            <motion.div
-              className="relative h-[600px] lg:h-[700px]"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.5, duration: 1 }}
-            >
-              {/* Massive "A" letter */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <motion.div
-                  className="text-[25rem] md:text-[30rem] lg:text-[35rem] font-black leading-none select-none text-transparent [-webkit-text-stroke:2px_hsl(var(--border))]"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.7 }}
-                >
-                  A
-                </motion.div>
-              </div>
-
-              {/* Profile photo integrated with the "A" */}
-              <motion.div
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] h-[380px] z-10"
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.9, duration: 0.8 }}
-              >
-                <div className="relative w-full h-full">
-                  <img
-                    src= "https://archive.smashing.media/assets/344dbf88-fdf9-42bb-adb4-46f01eedd629/0fe015ce-47e5-4692-a52e-73b05a4658af/illustrator-artworks-showcase-81.jpg  "
-                    alt="Akshat Gupta"
-                    className="w-full h-full object-cover rounded-3xl shadow-2xl"
-                  />
-                  
-                  {/* Overlay gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary/30 to-transparent rounded-3xl" />
-                </div>
-              </motion.div>
-
-              {/* Abstract brush stroke decoration */}
-              <motion.img
-                src={brushStroke}
-                alt=""
-                className="absolute top-20 right-0 w-64 h-64 opacity-30 mix-blend-multiply"
-                initial={{ opacity: 0, rotate: 0 }}
-                animate={{ opacity: 0.3, rotate: -15 }}
-                transition={{ delay: 1.1, duration: 0.8 }}
-              />
-
-              {/* Floating badge - CS Student */}
-              <motion.div
-                className="absolute -right-4 top-1/4 bg-primary text-white px-6 py-4 rounded-2xl shadow-xl z-20"
-                initial={{ opacity: 0, x: 50 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 1.2 }}
-                whileHover={{ scale: 1.05 }}
-              >
-                <div className="flex items-center gap-3">
-                  <Sparkles className="w-5 h-5" />
-                  <div>
-                    <p className="text-sm font-bold">Software Developer</p>
-                    <p className="text-xs opacity-90">C++ & Python</p>
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* Floating badge - Tech Stack */}
-              <motion.div
-                className="absolute -left-4 bottom-1/4 bg-accent text-white px-6 py-4 rounded-2xl shadow-xl z-20"
-                initial={{ opacity: 0, x: -50 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 1.4 }}
-                whileHover={{ scale: 1.05 }}
-              >
-                <div className="flex items-center gap-3">
-                  <Code className="w-5 h-5" />
-                  <div>
-                    <p className="text-sm font-bold">Full Stack</p>
-                    <p className="text-xs opacity-90">MERN & AI/ML</p>
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* Decorative dots pattern */}
-              <motion.div
-                className="absolute top-12 left-12 grid grid-cols-3 gap-2"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1.3 }}
-              >
-                {[...Array(9)].map((_, i) => (
-                  <motion.div
-                    key={i}
-                    className="w-1.5 h-1.5 rounded-full bg-muted-foreground/30"
-                    animate={{
-                      scale: [1, 1.3, 1],
-                    }}
-                    transition={{
-                      duration: 2,
-                      repeat: Infinity,
-                      delay: i * 0.1,
-                    }}
-                  />
-                ))}
-              </motion.div>
-
-              {/* Curved decorative line */}
-              <motion.svg
-                className="absolute bottom-12 right-12 w-24 h-24"
-                viewBox="0 0 100 100"
-                initial={{ opacity: 0, pathLength: 0 }}
-                animate={{ opacity: 0.5, pathLength: 1 }}
-                transition={{ delay: 1.5, duration: 1.5 }}
-              >
-                <motion.path
-                  d="M 10 50 Q 30 10, 50 50 T 90 50"
-                  stroke="hsl(var(--primary))"
-                  strokeWidth="2"
-                  fill="none"
-                  initial={{ pathLength: 0 }}
-                  animate={{ pathLength: 1 }}
-                  transition={{ duration: 2, delay: 1.5 }}
-                />
-              </motion.svg>
-            </motion.div>
-          </div>
-        </div>
+      {/* Background */}
+      <div className="absolute inset-0 w-full h-full pointer-events-auto">
+        <Spline
+          scene="https://prod.spline.design/LHYkVvonZ-djY-TM/scene.splinecode"
+          className="w-full h-full"
+        />
       </div>
 
-      {/* Side social links - vertical */}
-      <motion.div
-        className="fixed left-6 bottom-8 z-40 hidden lg:flex flex-col gap-6"
-        initial={{ opacity: 0, x: -50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 1.6 }}
-      >
-        <div className="flex flex-col items-center gap-4">
-          {[
-            { icon: Github, href: "https://github.com/akshatx03x" },
-            { icon: Linkedin, href: "https://www.linkedin.com/in/akshat-undefined-7a5317375/" },
-            { icon: Mail, href: "mailto:akshat@example.com" },
-          ].map((social, index) => (
-            <motion.a
-              key={index}
-              href={social.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-10 h-10 rounded-full border-2 border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-all"
-              whileHover={{ scale: 1.2, rotate: 5 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              <social.icon className="w-5 h-5" />
-            </motion.a>
-          ))}
-        </div>
-        <div className="w-[2px] h-20 bg-border mx-auto" />
-      </motion.div>
+      {/* Content */}
+      <div className="relative z-20 max-w-3xl space-y-10 pointer-events-none">
 
-      {/* Scroll indicator */}
-      <motion.button
+        <motion.p
+          variants={textVariant}
+          initial="hidden"
+          animate="show"
+          className="text-sm uppercase tracking-[0.3em] text-gray-400"
+        >
+          Welcome to my world
+        </motion.p>
+
+        {/* Main Heading */}
+        <motion.h1 className="text-[4rem] md:text-[5rem] font-black leading-tight flex gap-4 text-white">
+          <motion.span initial="hidden" animate="show" className="flex">
+            I'm
+          </motion.span>
+
+          {/* 🔥 One smooth gradient for the entire name */}
+          <motion.span
+            className="bg-gradient-to-r from-cyan-400 via-purple-500  to-slate-800 bg-clip-text text-transparent flex"
+          >
+            {heading.split("").map((letter, i) => (
+              <motion.span
+                key={i}
+                custom={i}
+                variants={letterVariant}
+                initial="hidden"
+                animate="show"
+                className="inline-block"
+              >
+                {letter}
+              </motion.span>
+            ))}
+          </motion.span>
+        </motion.h1>
+
+        {/* Subheading */}
+        <motion.p
+          variants={textVariant}
+          initial="hidden"
+          animate="show"
+          transition={{ delay: 0.4 }}
+          className="text-xl text-gray-300 max-w-xl leading-relaxed"
+        >
+          I craft <span className="text-gray-400">interactive</span> web experiences
+          and build intelligent AI systems that come alive on your screen.
+        </motion.p>
+
+        {/* Buttons */}
+        <motion.div
+          className="flex gap-4 pt-2 pointer-events-auto"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.8 }}
+        >
+          <Button
+            size="lg"
+            className="px-8 font-semibold shadow-xl hover:scale-[1.03] transition-transform
+            bg-gradient-to-r from-cyan-500 to-purple-600 text-white border border-white/20
+            hover:from-cyan-400 hover:to-purple-500"
+            onClick={() => scrollToSection("portfolio")}
+          >
+            View My Work
+          </Button>
+
+          <Button
+            size="lg"
+            variant="outline"
+            className="px-8 font-semibold border-2
+            bg-gradient-to-r from-cyan-500 to-purple-600 bg-clip-text text-transparent
+            border-cyan-500/40 hover:bg-white hover:text-white transition"
+            onClick={() =>
+              window.open("https://app.enhancv.com/share/75a20562", "_blank")
+            }
+          >
+            Download CV
+          </Button>
+        </motion.div>
+      </div>
+
+      {/* Scroll Indicator */}
+      <motion.div
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 text-gray-400 flex flex-col items-center gap-2 cursor-pointer pointer-events-auto"
         onClick={() => scrollToSection("about")}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted-foreground hover:text-primary transition-colors group"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 2 }}
+        transition={{ delay: 1.4 }}
       >
-        <span className="text-xs font-medium tracking-wider">SCROLL</span>
+        <span className="text-xs tracking-wider">SCROLL</span>
         <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity }}
+          animate={{ y: [0, 10, 0] }}
+          transition={{ repeat: Infinity, duration: 1.2 }}
         >
           <ArrowDown className="w-5 h-5" />
         </motion.div>
-      </motion.button>
+      </motion.div>
     </section>
   );
 };

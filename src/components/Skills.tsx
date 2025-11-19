@@ -1,3 +1,5 @@
+// Dark mode version of the Skills component
+
 import { Card } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
@@ -36,10 +38,9 @@ const Skills = () => {
   const { ref, isVisible } = useScrollReveal(0.2);
 
   return (
-    <section id="skills" className="py-24 bg-background relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent/5 rounded-full blur-3xl" />
-      
+    <section id="skills" className="py-24 bg-black text-white relative overflow-hidden">
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent/20 rounded-full blur-3xl" />
+
       <div className="container mx-auto px-6 relative z-10">
         <div className="max-w-5xl mx-auto">
           <motion.div
@@ -55,17 +56,18 @@ const Skills = () => {
               animate={isVisible ? { scale: 1 } : {}}
               transition={{ duration: 0.5, type: "spring" }}
             >
-              <span className="inline-block px-4 py-2 bg-accent/10 text-accent rounded-full text-sm font-semibold">
+              <span className="inline-block px-4 py-2 bg-accent/20 text-accent rounded-full text-sm font-semibold">
                 My Expertise
               </span>
             </motion.div>
+
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              Technical{" "}
+              Technical {" "}
               <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                 Skills
               </span>
             </h2>
-            <p className="text-muted-foreground text-lg">
+            <p className="text-gray-300 text-lg">
               Technologies I work with to bring ideas to life
             </p>
           </motion.div>
@@ -78,28 +80,26 @@ const Skills = () => {
                 animate={isVisible ? { opacity: 1, y: 0 } : {}}
                 transition={{ delay: idx * 0.15, duration: 0.6 }}
               >
-                <Card className="p-6 h-full hover:shadow-xl transition-all border-border/50 hover:border-primary/30 bg-card/50 backdrop-blur">
+                <Card className="p-6 h-full bg-zinc-900 border-zinc-700 hover:border-primary/40 hover:shadow-xl transition-all rounded-xl">
                   <motion.div
-                    className="mb-6 pb-4 border-b border-border"
+                    className="mb-6 pb-4 border-b border-zinc-700"
                     whileHover={{ scale: 1.05 }}
                   >
                     <h3 className="text-xl font-bold text-center bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                       {category.category}
                     </h3>
                   </motion.div>
+
                   <div className="space-y-6">
                     {category.skills.map((skill, skillIdx) => (
                       <motion.div
                         key={skill.name}
                         initial={{ opacity: 0, x: -20 }}
                         animate={isVisible ? { opacity: 1, x: 0 } : {}}
-                        transition={{
-                          delay: idx * 0.15 + skillIdx * 0.1,
-                          duration: 0.5,
-                        }}
+                        transition={{ delay: idx * 0.15 + skillIdx * 0.1, duration: 0.5 }}
                       >
                         <div className="flex justify-between items-center mb-2">
-                          <span className="text-sm font-semibold text-foreground">
+                          <span className="text-sm font-semibold text-white">
                             {skill.name}
                           </span>
                           <motion.span
@@ -111,26 +111,18 @@ const Skills = () => {
                             {skill.level}%
                           </motion.span>
                         </div>
-                        <div className="h-2.5 bg-muted rounded-full overflow-hidden">
+
+                        <div className="h-2.5 bg-zinc-800 rounded-full overflow-hidden">
                           <motion.div
                             className="h-full bg-gradient-to-r from-primary to-accent rounded-full relative"
                             initial={{ width: 0 }}
                             animate={isVisible ? { width: `${skill.level}%` } : {}}
-                            transition={{
-                              delay: idx * 0.15 + skillIdx * 0.1 + 0.2,
-                              duration: 1,
-                            }}
+                            transition={{ delay: idx * 0.15 + skillIdx * 0.1 + 0.2, duration: 1 }}
                           >
                             <motion.div
                               className="absolute inset-0 bg-white/20"
-                              animate={{
-                                x: ["-100%", "100%"],
-                              }}
-                              transition={{
-                                duration: 1.5,
-                                repeat: Infinity,
-                                ease: "linear",
-                              }}
+                              animate={{ x: ["-100%", "100%"] }}
+                              transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
                             />
                           </motion.div>
                         </div>
@@ -148,7 +140,7 @@ const Skills = () => {
             animate={isVisible ? { opacity: 1, y: 0 } : {}}
             transition={{ delay: 0.8, duration: 0.6 }}
           >
-            <p className="text-muted-foreground">
+            <p className="text-gray-400">
               Also exploring:{" "}
               {["DSA", "System Design", "DevOps & Cloud-Computing"].map((item, index) => (
                 <motion.span
