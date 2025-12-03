@@ -25,12 +25,19 @@ const letterVariant = {
 };
 
 const Hero = () => {
-  // 🔥 Detect Mobile Device
   const [isMobile, setIsMobile] = useState(false);
+  const [showSpline, setShowSpline] = useState(false);
 
   useEffect(() => {
     if (window.innerWidth < 768) {
       setIsMobile(true);
+
+      // ⭐ DELAY SPLINE LOAD ON MOBILE (actual performance fix)
+      setTimeout(() => {
+        setShowSpline(true);
+      }, 1000); // 1 second delay
+    } else {
+      setShowSpline(true); // desktop loads immediately
     }
   }, []);
 
@@ -44,27 +51,36 @@ const Hero = () => {
   return (
     <section className="relative w-full min-h-screen flex items-center overflow-hidden px-6 pt-20 bg-black">
 
-      {/* Background */}
-      <div
-        className={`absolute inset-0 w-full h-full pointer-events-auto transition-all duration-500 
-        ${isMobile ? "scale-[0.75] opacity-70" : "scale-100 opacity-100"}`}
-      >
-        <Spline
-          scene={
-            isMobile
-              ? // ⚡ Lighter mobile-optimized Spline scene (same scene but less computation)
-                "https://prod.spline.design/LHYkVvonZ-djY-TM/scene.splinecode?quality=low"
-              : // ⚡ Full high-quality scene for PC/Laptop
-                "https://prod.spline.design/LHYkVvonZ-djY-TM/scene.splinecode"
-          }
-          className="w-full h-full"
-          showWatermark={false}
-        />
+      {/* Background Layer */}
+      <div className="absolute inset-0 w-full h-full pointer-events-auto">
+
+        {/* 👉 MOBILE INITIAL PLACEHOLDER (fixes freezing/lags) */}
+        {!showSpline && (
+          <div className="w-full h-full bg-gradient-to-b from-black to-gray-900 flex items-center justify-center">
+            <p className="text-gray-400 text-sm tracking-widest">
+              Loading 3D Scene...
+            </p>
+          </div>
+        )}
+
+        {/* 👉 REAL SPLINE SCENE (loads after delay on mobile) */}
+        {showSpline && (
+          <Spline
+            scene={
+              isMobile
+                ? "https://prod.spline.design/LHYkVvonZ-djY-TM/scene.splinecode?quality=low"
+                : "https://prod.spline.design/LHYkVvonZ-djY-TM/scene.splinecode"
+            }
+            className={`w-full h-full transition-all duration-700 ${
+              isMobile ? "scale-[0.8] opacity-85" : "scale-100 opacity-100"
+            }`}
+            showWatermark={false}
+          />
+        )}
       </div>
 
       {/* Content */}
       <div className="relative z-20 max-w-3xl space-y-10 pointer-events-none">
-
         <motion.p
           variants={textVariant}
           initial="hidden"
@@ -76,16 +92,15 @@ const Hero = () => {
 
         {/* Main Heading */}
         <motion.h1
-          className={`font-black leading-tight flex gap-4 text-white
-            ${isMobile ? "text-[2.8rem]" : "text-[4rem] md:text-[5rem]"}`}
+          className={`font-black leading-tight flex gap-4 text-white ${
+            isMobile ? "text-[2.8rem]" : "text-[4rem] md:text-[5rem]"
+          }`}
         >
           <motion.span initial="hidden" animate="show" className="flex">
             I'm
           </motion.span>
 
-          <motion.span
-            className="bg-gradient-to-r from-cyan-400 via-purple-500 to-slate-800 bg-clip-text text-transparent flex"
-          >
+          <motion.span className="bg-gradient-to-r from-cyan-400 via-purple-500 to-slate-800 bg-clip-text text-transparent flex">
             {heading.split("").map((letter, i) => (
               <motion.span
                 key={i}
@@ -154,10 +169,7 @@ const Hero = () => {
         transition={{ delay: 1.4 }}
       >
         <span className="text-xs tracking-wider">SCROLL</span>
-        <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ repeat: Infinity, duration: 1.2 }}
-        >
+        <motion.div animate={{ y: [0, 10, 0] }} transition={{ repeat: Infinity, duration: 1.2 }}>
           <ArrowDown className="w-5 h-5" />
         </motion.div>
       </motion.div>
