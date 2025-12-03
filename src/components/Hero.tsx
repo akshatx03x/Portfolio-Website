@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowDown } from "lucide-react";
 import Spline from "@splinetool/react-spline";
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 const textVariant = {
   hidden: { opacity: 0, y: 20 },
@@ -24,6 +25,15 @@ const letterVariant = {
 };
 
 const Hero = () => {
+  // 🔥 Detect Mobile Device
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    if (window.innerWidth < 768) {
+      setIsMobile(true);
+    }
+  }, []);
+
   const scrollToSection = (sectionId: string) => {
     const el = document.getElementById(sectionId);
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -35,10 +45,20 @@ const Hero = () => {
     <section className="relative w-full min-h-screen flex items-center overflow-hidden px-6 pt-20 bg-black">
 
       {/* Background */}
-      <div className="absolute inset-0 w-full h-full pointer-events-auto">
+      <div
+        className={`absolute inset-0 w-full h-full pointer-events-auto transition-all duration-500 
+        ${isMobile ? "scale-[0.75] opacity-70" : "scale-100 opacity-100"}`}
+      >
         <Spline
-          scene="https://prod.spline.design/LHYkVvonZ-djY-TM/scene.splinecode"
+          scene={
+            isMobile
+              ? // ⚡ Lighter mobile-optimized Spline scene (same scene but less computation)
+                "https://prod.spline.design/LHYkVvonZ-djY-TM/scene.splinecode?quality=low"
+              : // ⚡ Full high-quality scene for PC/Laptop
+                "https://prod.spline.design/LHYkVvonZ-djY-TM/scene.splinecode"
+          }
           className="w-full h-full"
+          showWatermark={false}
         />
       </div>
 
@@ -55,14 +75,16 @@ const Hero = () => {
         </motion.p>
 
         {/* Main Heading */}
-        <motion.h1 className="text-[4rem] md:text-[5rem] font-black leading-tight flex gap-4 text-white">
+        <motion.h1
+          className={`font-black leading-tight flex gap-4 text-white
+            ${isMobile ? "text-[2.8rem]" : "text-[4rem] md:text-[5rem]"}`}
+        >
           <motion.span initial="hidden" animate="show" className="flex">
             I'm
           </motion.span>
 
-          {/* 🔥 One smooth gradient for the entire name */}
           <motion.span
-            className="bg-gradient-to-r from-cyan-400 via-purple-500  to-slate-800 bg-clip-text text-transparent flex"
+            className="bg-gradient-to-r from-cyan-400 via-purple-500 to-slate-800 bg-clip-text text-transparent flex"
           >
             {heading.split("").map((letter, i) => (
               <motion.span
