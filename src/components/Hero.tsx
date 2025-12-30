@@ -11,7 +11,7 @@ const textVariant = {
   show: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: [0, 0, 0.58, 1] },
+    transition: { duration: 0.6 },
   },
 };
 
@@ -74,7 +74,6 @@ const Hero = () => {
             className={`w-full h-full transition-all duration-700 ${
               isMobile ? "scale-[0.8] opacity-85" : "scale-100 opacity-100"
             }`}
-            showWatermark={false}
           />
         )}
       </div>
