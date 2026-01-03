@@ -7,18 +7,8 @@ import { motion } from "framer-motion";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const projects = [
-  {
+    {
     id: 1,
-    name: "Chatlify",
-    description: "Chat application with real-time messaging features",
-    tags: ["JavaScript"],
-    stars: 1,
-    featured: true,
-    githubUrl: "https://github.com/akshatx03x/Chatlify",
-    demoUrl: "https://chatlify-dosw.onrender.com/",
-  },
-  {
-    id: 2,
     name: "ConvoSpace",
     description:
       "Collaboration platform with WebRTC video calls, file sharing, notepads and AI assistance using Gemini + OpenAI.",
@@ -28,26 +18,59 @@ const projects = [
     githubUrl: "https://github.com/akshatx03x/ConvoSpace",
     demoUrl: "https://convospace-mu.vercel.app",
   },
+    {
+    id: 2,
+    name: "CodeCollab",
+    description:
+      "CodeCollab is a real-time collaborative coding platform that allows multiple developers to write and edit code together seamlessly. Built with modern web technologies, it focuses on speed, simplicity, and efficient teamwork",
+    tags: ["JavaScript"],
+    stars: 1,
+    featured: true,
+    githubUrl: "https://github.com/akshatx03x/CodeCollab",
+    demoUrl: "https://code-collab-eta-five.vercel.app/",
+  },
+
+
   {
     id: 3,
     name: "GemScribe",
     description:
-      "MERN-based AI README generator using Gemini 2.0 Flash API with Google/GitHub OAuth.",
+      "GemScribe is an AI-powered tool designed to generate clean, well-structured README files using Gemini 2.0. It helps developers quickly create professional documentation by transforming project details into clear and consistent README content..",
     tags: ["JavaScript"],
     stars: 1,
     featured: true,
     githubUrl: "https://github.com/akshatx03x/GemScribe",
-    demoUrl: "https://gemscribe.onrender.com/",
+    demoUrl: "https://gem-scribe.vercel.app/",
   },
   {
     id: 4,
     name: "UrbanCart",
-    description: "Modern e-commerce platform with advanced features.",
+    description: "UrbanCart is a modern e-commerce web application with product browsing, cart management, an admin dashboard, and sales analytics with graphs. Built using modern web technologies, it focuses on performance and scalability.",
     tags: ["JavaScript"],
     stars: 1,
     featured: true,
     githubUrl: "https://github.com/akshatx03x/UrbanCart",
-    demoUrl: null,
+    demoUrl: "https://urban-cart-azure.vercel.app/",
+  },
+  {
+    id: 5,
+    name: "NextImgKit",
+    description: "NextImgkit is a Next.js media management project built with ImageKit, enabling AI-powered image and video editing, optimization, and high-performance delivery.",
+    tags: ["JavaScript"],
+    stars: 1,
+    featured: true,
+    githubUrl: "https://github.com/akshatx03x/NextImgkit",
+    demoUrl: "https://imagekit.vercel.app/",
+  },
+  {
+    id: 6,
+    name: "Chatlify",
+    description: "Chat application with real-time messaging features",
+    tags: ["JavaScript"],
+    stars: 1,
+    featured: true,
+    githubUrl: "https://github.com/akshatx03x/Chatlify",
+    demoUrl: "https://chatlify-dosw.onrender.com/",
   },
 ];
 
@@ -133,10 +156,13 @@ const Projects = () => {
           </motion.div>
 
           {/* Project Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 place-items-center">
             {filteredProjects.map((project, idx) => (
-              <motion.div
+              <motion.a
                 key={project.id}
+                href={project.demoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
                 initial={{ opacity: 0, y: 40 }}
                 animate={isVisible ? { opacity: 1, y: 0 } : {}}
                 transition={{ delay: idx * 0.15, duration: 0.7, ease: "easeOut" }}
@@ -213,7 +239,7 @@ const Projects = () => {
                     </div>
                   </div>
                 </Card>
-              </motion.div>
+              </motion.a>
             ))}
           </div>
 

@@ -12,7 +12,6 @@ import {
   Twitter,
   Send,
 } from "lucide-react";
-import { toast } from "sonner";
 import { motion } from "framer-motion";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 
@@ -39,24 +38,27 @@ const Contact = () => {
     email: "",
     message: "",
   });
+  const [showOptions, setShowOptions] = useState(false);
 
   const { ref, isVisible } = useScrollReveal(0.2);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleMessageChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setFormData({ ...formData, message: e.target.value });
+    setShowOptions(e.target.value.trim() !== "");
+  };
 
-    const subject = encodeURIComponent(
-      `Portfolio Contact: ${formData.name}`
-    );
-    const body = encodeURIComponent(
-      `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
-    );
-
-    const mailtoLink = `mailto:akshatx03x@gmail.com?subject=${subject}&body=${body}`;
+  const handleSendOutlook = () => {
+    const subject = `Message from ${formData.name}`;
+    const body = `From: ${formData.name} (${formData.email})\n\n${formData.message}`;
+    const mailtoLink = `mailto:akshatg.gupta03@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     window.location.href = mailtoLink;
+  };
 
-    toast.success("Opening your email client...");
-    setFormData({ name: "", email: "", message: "" });
+  const handleSendGmail = () => {
+    const subject = `Message from ${formData.name}`;
+    const body = `From: ${formData.name} (${formData.email})\n\n${formData.message}`;
+    const gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to=akshatg.gupta03@gmail.com&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.open(gmailLink, '_blank');
   };
 
   return (
@@ -104,7 +106,7 @@ const Contact = () => {
               transition={{ duration: 0.6 }}
             >
               <Card className="p-8 bg-white/5 border border-white/10 backdrop-blur-xl shadow-xl">
-                <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="space-y-6">
 
                   {/* Name */}
                   <div>
@@ -149,21 +151,33 @@ const Contact = () => {
                       placeholder="Tell me about your project..."
                       className="bg-white/10 border-white/20 text-white focus:border-primary resize-none"
                       value={formData.message}
-                      onChange={(e) =>
-                        setFormData({ ...formData, message: e.target.value })
-                      }
+                      onChange={handleMessageChange}
                       required
                     />
                   </div>
 
-                  <Button
-                    type="submit"
-                    className="w-full bg-gradient-to-r from-cyan-500 to-purple-600 text-white font-semibold shadow-lg hover:shadow-cyan-500/50 transition-all gap-2"
-                  >
-                    <Send className="w-4 h-4" />
-                    Send Message
-                  </Button>
-                </form>
+                  {showOptions && (
+                    <div className="space-y-4">
+                      <p className="text-sm text-gray-300">Choose how to send your message:</p>
+                      <div className="flex gap-4">
+                        <Button
+                          onClick={handleSendOutlook}
+                          className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-lg transition-all gap-2"
+                        >
+                          <Mail className="w-4 h-4" />
+                          Outlook
+                        </Button>
+                        <Button
+                          onClick={handleSendGmail}
+                          className="flex-1 bg-red-600 hover:bg-red-700 text-white font-semibold shadow-lg transition-all gap-2"
+                        >
+                          <Mail className="w-4 h-4" />
+                          Gmail
+                        </Button>
+                      </div>
+                    </div>
+                  )}
+                </div>
               </Card>
             </motion.div>
 
@@ -178,8 +192,8 @@ const Contact = () => {
                 {
                   icon: Mail,
                   title: "Email",
-                  info: "akshatx03x@gmail.com",
-                  link: "mailto:akshatx03x@gmail.com",
+                  info: "akshatg.gupta03@gmail.com",
+                  link: "mailto:akshatg.gupta03@gmail.com",
                   linkText: "Send an email",
                   color: "primary",
                   delay: 0.2,

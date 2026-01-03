@@ -74,7 +74,6 @@ const Hero = () => {
             className={`w-full h-full transition-all duration-700 ${
               isMobile ? "scale-[0.8] opacity-85" : "scale-100 opacity-100"
             }`}
-            showWatermark={false}
           />
         )}
       </div>
@@ -151,9 +150,14 @@ const Hero = () => {
             className="px-8 font-semibold border-2
             bg-gradient-to-r from-cyan-500 to-purple-600 bg-clip-text text-transparent
             border-cyan-500/40 hover:bg-white hover:text-white transition"
-            onClick={() =>
-              window.open("https://app.enhancv.com/share/75a20562", "_blank")
-            }
+            onClick={() => {
+              const link = document.createElement('a');
+              link.href = '/Akshat Resume.pdf';
+              link.download = 'Akshat Resume.pdf';
+              document.body.appendChild(link);
+              link.click();
+              document.body.removeChild(link);
+            }}
           >
             Download CV
           </Button>
