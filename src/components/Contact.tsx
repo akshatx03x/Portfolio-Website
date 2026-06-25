@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Card } from "@/components/ui/card";
 import {
   Mail,
   Phone,
@@ -10,303 +9,231 @@ import {
   Github,
   Linkedin,
   Twitter,
-  Send,
+  ArrowUpRight,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
-
-// FIX: Tailwind color map
-const colorClasses: Record<
-  string,
-  { bg: string; text: string; border: string }
-> = {
-  primary: {
-    bg: "bg-primary/10",
-    text: "text-primary",
-    border: "border-primary/30",
-  },
-  accent: {
-    bg: "bg-accent/10",
-    text: "text-accent",
-    border: "border-accent/30",
-  },
-};
-
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
+  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [showOptions, setShowOptions] = useState(false);
-
-  const { ref, isVisible } = useScrollReveal(0.2);
-
+  const { ref, isVisible } = useScrollReveal(0.15);
   const handleMessageChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setFormData({ ...formData, message: e.target.value });
     setShowOptions(e.target.value.trim() !== "");
   };
-
+  const buildBody = () =>
+    `From: ${formData.name} (${formData.email})\n\n${formData.message}`;
+  const subject = () => `Message from ${formData.name || "Portfolio Visitor"}`;
   const handleSendOutlook = () => {
-    const subject = `Message from ${formData.name}`;
-    const body = `From: ${formData.name} (${formData.email})\n\n${formData.message}`;
-    const mailtoLink = `mailto:akshatg.gupta03@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    window.location.href = mailtoLink;
+    window.location.href = `mailto:akshatg.gupta03@gmail.com?subject=${encodeURIComponent(
+      subject()
+    )}&body=${encodeURIComponent(buildBody())}`;
   };
-
   const handleSendGmail = () => {
-    const subject = `Message from ${formData.name}`;
-    const body = `From: ${formData.name} (${formData.email})\n\n${formData.message}`;
-    const gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to=akshatg.gupta03@gmail.com&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    window.open(gmailLink, '_blank');
+    window.open(
+      `https://mail.google.com/mail/?view=cm&fs=1&to=akshatg.gupta03@gmail.com&su=${encodeURIComponent(
+        subject()
+      )}&body=${encodeURIComponent(buildBody())}`,
+      "_blank"
+    );
   };
-
+  const contactItems = [
+    {
+      icon: Mail,
+      label: "Email",
+      value: "akshatg.gupta03@gmail.com",
+      href: "mailto:akshatg.gupta03@gmail.com",
+    },
+    {
+      icon: Phone,
+      label: "Phone",
+      value: "+91 88822 18584",
+      href: "tel:+918882218584",
+    },
+    {
+      icon: MapPin,
+      label: "Location",
+      value: "New Delhi, India · Remote-friendly",
+      href: null,
+    },
+  ];
+  const socials = [
+    { icon: Github, href: "https://github.com/akshatx03x", label: "GitHub" },
+    { icon: Linkedin, href: "https://www.linkedin.com/in/akshatx03x/", label: "LinkedIn" },
+    { icon: Twitter, href: "https://x.com/akshatx03x", label: "Twitter" },
+  ];
   return (
     <section
       id="contact"
-      className="py-24 bg-black relative overflow-hidden text-white"
+      ref={ref as React.RefObject<HTMLElement>}
+      className="relative bg-black py-28 text-white"
     >
-      {/* 🔥 Neon Gradient Background Blobs */}
-      <div className="absolute top-0 right-0 w-[450px] h-[450px] bg-gradient-to-br from-purple-600/30 to-pink-500/20 blur-[140px] rounded-full" />
-      <div className="absolute bottom-0 left-0 w-[450px] h-[450px] bg-gradient-to-tr from-cyan-500/30 to-blue-500/20 blur-[140px] rounded-full" />
-
-      <div className="container mx-auto px-6 relative z-10">
-        <div className="max-w-5xl mx-auto">
-
-          {/* HEADER */}
+      <div className="mx-auto max-w-6xl px-6 md:px-12">
+        {/* HEADER */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isVisible ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className="mb-16 border-b border-zinc-900 pb-10"
+        >
+          <span className="text-xs uppercase tracking-[0.3em] text-zinc-500">
+            Let's Connect
+          </span>
+          <h2 className="mt-4 text-4xl font-bold tracking-tight text-white md:text-6xl">
+            Get in touch.
+          </h2>
+          <p className="mt-4 max-w-xl text-zinc-400">
+            Have a project, a role, or just an idea worth talking about? Drop a message.
+          </p>
+        </motion.div>
+        <div className="grid gap-10 lg:grid-cols-[1.2fr,1fr]">
+          {/* FORM */}
           <motion.div
-            ref={ref}
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 30 }}
-            animate={isVisible ? { opacity: 1, y: 0 } : {}}
+            initial={{ opacity: 0, x: -30 }}
+            animate={isVisible ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6 }}
+            className="rounded-2xl border border-zinc-900 bg-zinc-950 p-8 md:p-10"
           >
-            <span className="inline-block px-4 py-2 bg-primary/20 text-primary rounded-full text-sm font-semibold mb-4 backdrop-blur">
-              Let's Connect
-            </span>
-
-            <h2 className="text-4xl md:text-5xl font-extrabold mb-4">
-              Get In{" "}
-              <span className="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-                Touch
-              </span>
-            </h2>
-
-            <p className="text-gray-300 text-lg">
-              Have a project in mind? Let’s build something amazing.
-            </p>
+            <div className="space-y-5">
+              <div className="grid gap-5 sm:grid-cols-2">
+                <div className="space-y-2">
+                  <label className="text-xs uppercase tracking-wider text-zinc-500">
+                    Name
+                  </label>
+                  <Input
+                    placeholder="Your name"
+                    className="border-zinc-800 bg-black text-white placeholder:text-zinc-600 focus-visible:border-white focus-visible:ring-0"
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-xs uppercase tracking-wider text-zinc-500">
+                    Email
+                  </label>
+                  <Input
+                    type="email"
+                    placeholder="you@example.com"
+                    className="border-zinc-800 bg-black text-white placeholder:text-zinc-600 focus-visible:border-white focus-visible:ring-0"
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    required
+                  />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <label className="text-xs uppercase tracking-wider text-zinc-500">
+                  Message
+                </label>
+                <Textarea
+                  placeholder="Tell me about your project, timeline, or just say hi."
+                  rows={6}
+                  className="resize-none border-zinc-800 bg-black text-white placeholder:text-zinc-600 focus-visible:border-white focus-visible:ring-0"
+                  value={formData.message}
+                  onChange={handleMessageChange}
+                  required
+                />
+              </div>
+              {/* Send options */}
+              <motion.div
+                initial={false}
+                animate={{
+                  opacity: showOptions ? 1 : 0.4,
+                  pointerEvents: showOptions ? "auto" : "none",
+                }}
+                transition={{ duration: 0.3 }}
+                className="flex flex-col gap-3 border-t border-zinc-900 pt-5 sm:flex-row"
+              >
+                <p className="self-center text-xs uppercase tracking-wider text-zinc-500 sm:mr-auto">
+                  Send via
+                </p>
+                <Button
+                  onClick={handleSendGmail}
+                  className="rounded-full bg-white px-5 text-sm font-medium text-black hover:bg-zinc-200"
+                >
+                  <Mail className="mr-2 h-4 w-4" />
+                  Gmail
+                </Button>
+                <Button
+                  onClick={handleSendOutlook}
+                  variant="outline"
+                  className="rounded-full border-zinc-700 bg-transparent px-5 text-sm font-medium text-white hover:bg-white/5 hover:text-white"
+                >
+                  <Mail className="mr-2 h-4 w-4" />
+                  Mail App
+                </Button>
+              </motion.div>
+            </div>
           </motion.div>
-
-          <div className="grid lg:grid-cols-2 gap-12">
-
-            {/* ---------- FORM ---------- */}
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              animate={isVisible ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.6 }}
-            >
-              <Card className="p-8 bg-white/5 border border-white/10 backdrop-blur-xl shadow-xl">
-                <div className="space-y-6">
-
-                  {/* Name */}
-                  <div>
-                    <label className="block text-sm text-slate-300 font-semibold mb-2">
-                      Your Name
-                    </label>
-                    <Input
-                      placeholder="John Doe"
-                      className="bg-white/10 border-white/20 text-white focus:border-primary"
-                      value={formData.name}
-                      onChange={(e) =>
-                        setFormData({ ...formData, name: e.target.value })
-                      }
-                      required
-                    />
+          {/* CONTACT INFO */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            animate={isVisible ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="space-y-3"
+          >
+            {contactItems.map((item) => {
+              const Icon = item.icon;
+              const content = (
+                <div className="group flex items-start gap-4 rounded-2xl border border-zinc-900 bg-zinc-950 p-5 transition-colors hover:border-zinc-700">
+                  <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg border border-zinc-800 bg-black">
+                    <Icon className="h-4 w-4 text-white" />
                   </div>
-
-                  {/* Email */}
-                  <div>
-                    <label className="block text-sm text-slate-300 font-semibold mb-2">
-                      Your Email
-                    </label>
-                    <Input
-                      type="email"
-                      placeholder="john@example.com"
-                      className="bg-white/10 border-white/20 text-white focus:border-primary"
-                      value={formData.email}
-                      onChange={(e) =>
-                        setFormData({ ...formData, email: e.target.value })
-                      }
-                      required
-                    />
+                  <div className="min-w-0 flex-1">
+                    <p className="text-xs uppercase tracking-wider text-zinc-500">
+                      {item.label}
+                    </p>
+                    <p className="mt-1 truncate text-sm text-white">{item.value}</p>
                   </div>
-
-                  {/* Message */}
-                  <div>
-                    <label className="block text-sm text-slate-300 font-semibold mb-2">
-                      Message
-                    </label>
-                    <Textarea
-                      rows={5}
-                      placeholder="Tell me about your project..."
-                      className="bg-white/10 border-white/20 text-white focus:border-primary resize-none"
-                      value={formData.message}
-                      onChange={handleMessageChange}
-                      required
-                    />
-                  </div>
-
-                  {showOptions && (
-                    <div className="space-y-4">
-                      <p className="text-sm text-gray-300">Choose how to send your message:</p>
-                      <div className="flex gap-4">
-                        <Button
-                          onClick={handleSendOutlook}
-                          className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-lg transition-all gap-2"
-                        >
-                          <Mail className="w-4 h-4" />
-                          Outlook
-                        </Button>
-                        <Button
-                          onClick={handleSendGmail}
-                          className="flex-1 bg-red-600 hover:bg-red-700 text-white font-semibold shadow-lg transition-all gap-2"
-                        >
-                          <Mail className="w-4 h-4" />
-                          Gmail
-                        </Button>
-                      </div>
-                    </div>
+                  {item.href && (
+                    <ArrowUpRight className="h-4 w-4 flex-shrink-0 text-zinc-600 transition-colors group-hover:text-white" />
                   )}
                 </div>
-              </Card>
-            </motion.div>
-
-            {/* ---------- CONTACT INFO ---------- */}
-            <motion.div
-              className="space-y-6"
-              initial={{ opacity: 0, x: 50 }}
-              animate={isVisible ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.6 }}
-            >
-              {[
-                {
-                  icon: Mail,
-                  title: "Email",
-                  info: "akshatg.gupta03@gmail.com",
-                  link: "mailto:akshatg.gupta03@gmail.com",
-                  linkText: "Send an email",
-                  color: "primary",
-                  delay: 0.2,
-                },
-                {
-                  icon: Phone,
-                  title: "Phone",
-                  info: "+91-88822 18584",
-                  link: "tel:+918882218584",
-                  linkText: "Give me a call",
-                  color: "accent",
-                  delay: 0.3,
-                },
-                {
-                  icon: MapPin,
-                  title: "Location",
-                  info: "New Delhi, India",
-                  linkText: "Available for remote work",
-                  color: "primary",
-                  delay: 0.4,
-                },
-              ].map((item) => {
-                const c = colorClasses[item.color];
-
-                return (
-                  <motion.div
-                    key={item.title}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={isVisible ? { opacity: 1, y: 0 } : {}}
-                    transition={{ delay: item.delay }}
-                  >
-                    <Card className="p-6 bg-white/5 border border-white/10 backdrop-blur-xl transition-all hover:border-primary/40 hover:shadow-2xl">
-                      <div className="flex items-start gap-4">
-                        <motion.div
-                          className={`w-14 h-14 rounded-xl ${c.bg} flex items-center justify-center`}
-                          whileHover={{ rotate: 5, scale: 1.1 }}
-                        >
-                          <item.icon className={`w-6 h-6 ${c.text}`} />
-                        </motion.div>
-
-                        <div>
-                          <h3 className="font-bold text-lg text-slate-300">{item.title}</h3>
-                          <p className="text-gray-300 text-sm mb-1">
-                            {item.info}
-                          </p>
-
-                          {item.link ? (
-                            <a
-                              href={item.link}
-                              className="text-primary text-sm hover:underline"
-                            >
-                              {item.linkText}
-                            </a>
-                          ) : (
-                            <p className="text-gray-400 text-xs">
-                              {item.linkText}
-                            </p>
-                          )}
-                        </div>
-                      </div>
-                    </Card>
-                  </motion.div>
-                );
-              })}
-
-              {/* Social Icons */}
-              <motion.div
-                className="pt-6"
-                initial={{ opacity: 0, y: 20 }}
-                animate={isVisible ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: 0.6 }}
-              >
-                <h3 className="font-bold mb-4 text-center text-lg">
-                  Connect with me
-                </h3>
-
-                <div className="flex justify-center gap-4">
-                  {[
-                    { icon: Github, href: "https://github.com/akshatx03x", label: "GitHub" },
-                    { icon: Linkedin, href: "https://www.linkedin.com/in/akshatx03x/", label: "LinkedIn" },
-                    { icon: Twitter, href: "https://x.com/akshatx03x", label: "Twitter" },
-                  ].map((social, i) => (
-                    <motion.a
-                      key={social.label}
-                      href={social.href}
+              );
+              return item.href ? (
+                <a key={item.label} href={item.href} className="block">
+                  {content}
+                </a>
+              ) : (
+                <div key={item.label}>{content}</div>
+              );
+            })}
+            {/* Socials */}
+            <div className="rounded-2xl border border-zinc-900 bg-zinc-950 p-5">
+              <p className="text-xs uppercase tracking-wider text-zinc-500">Elsewhere</p>
+              <div className="mt-4 flex gap-2">
+                {socials.map((s) => {
+                  const Icon = s.icon;
+                  return (
+                    <a
+                      key={s.label}
+                      href={s.href}
                       target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-14 h-14 rounded-full bg-white/5 border border-white/20 backdrop-blur-lg flex items-center justify-center hover:border-primary hover:text-primary transition-all group relative"
-                      whileHover={{ scale: 1.15, rotate: 5 }}
-                      whileTap={{ scale: 0.95 }}
-                      initial={{ opacity: 0, scale: 0 }}
-                      animate={
-                        isVisible ? { opacity: 1, scale: 1 } : {}
-                      }
-                      transition={{
-                        delay: 0.7 + i * 0.1,
-                        type: "spring",
-                      }}
+                      rel="noreferrer"
+                      aria-label={s.label}
+                      className="flex h-10 w-10 items-center justify-center rounded-lg border border-zinc-800 bg-black text-zinc-400 transition-colors hover:border-white hover:text-white"
                     >
-                      <social.icon className="w-5 h-5" />
-                      <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity">
-                        {social.label}
-                      </span>
-                    </motion.a>
-                  ))}
-                </div>
-              </motion.div>
-            </motion.div>
-          </div>
+                      <Icon className="h-4 w-4" />
+                    </a>
+                  );
+                })}
+              </div>
+            </div>
+            {/* Availability badge */}
+            <div className="flex items-center gap-3 rounded-2xl border border-zinc-900 bg-zinc-950 p-5">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+              </span>
+              <p className="text-sm text-zinc-300">
+                Currently available for freelance & internships
+              </p>
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>
   );
 };
-
 export default Contact;

@@ -1,161 +1,222 @@
-// Dark mode version of the Skills component
+const icon = (slug: string, variant = "original") =>
+  `https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${slug}/${slug}-${variant}.svg`;
 
-import { Card } from "@/components/ui/card";
-import { motion } from "framer-motion";
-import { useScrollReveal } from "@/hooks/useScrollReveal";
+type Tech = { name: string; src: string; invert?: boolean };
 
-const skillCategories = [
+// Four orbital rings, inner → outer
+// radiusPct is the fraction of half the stage width/height (1.0 touches the boundary)
+const rings: { radiusPct: number; duration: number; reverse?: boolean; items: Tech[] }[] = [
   {
-    category: "Frontend",
-    skills: [
-      { name: "React", level: 90 },
-      { name: "Next.js", level: 85 },
-      { name: "TypeScript", level: 85 },
-      { name: "Tailwind CSS", level: 90 },
+    radiusPct: 0.18,
+    duration: 28,
+    items: [
+      { name: "TypeScript", src: icon("typescript") },
+      { name: "JavaScript", src: icon("javascript") },
+      { name: "Python", src: icon("python") },
+      { name: "C++", src: icon("cplusplus") },
+      { name: "C", src: icon("c") },
+      { name: "HTML5", src: icon("html5") },
+      { name: "CSS3", src: icon("css3") },
     ],
   },
   {
-    category: "Backend",
-    skills: [
-      { name: "Node.js", level: 85 },
-      { name: "Express", level: 85 },
-      { name: "MongoDB", level: 80 },
-      { name: "REST APIs", level: 85 },
+    radiusPct: 0.30,
+    duration: 45,
+    reverse: true,
+    items: [
+      { name: "React", src: icon("react") },
+      { name: "React Native", src: icon("react") },
+      { name: "Next.js", src: icon("nextjs", "original"), invert: true },
+      { name: "Tailwind CSS", src: icon("tailwindcss", "original") },
+      { name: "Express", src: icon("express", "original"), invert: true },
+      { name: "Node.js", src: icon("nodejs") },
     ],
   },
   {
-    category: "Mobile & AI",
-    skills: [
-      { name: "React Native", level: 80 },
-      { name: "AI/ML", level: 75 },
-      { name: "Python", level: 80 },
-      { name: "C++", level: 85 },
+    radiusPct: 0.41,
+    duration: 60,
+    items: [
+      { name: "TensorFlow", src: icon("tensorflow") },
+      { name: "PyTorch", src: icon("pytorch") },
+      { name: "NumPy", src: icon("numpy") },
+      { name: "OpenCV", src: icon("opencv") },
+    ],
+  },
+  {
+    radiusPct: 0.52,
+    duration: 75,
+    reverse: true,
+    items: [
+      { name: "MongoDB", src: icon("mongodb") },
+      { name: "MySQL", src: icon("mysql") },
+      { name: "Firebase", src: icon("firebase", "plain") },
+      { name: "AWS", src: icon("amazonwebservices", "original-wordmark"), invert: true },
+      { name: "Docker", src: icon("docker") },
+      { name: "Kubernetes", src: icon("kubernetes") },
+      { name: "Git", src: icon("git") },
+      { name: "GitHub", src: icon("github", "original"), invert: true },
     ],
   },
 ];
 
+const alsoExploring = ["DSA", "System Design", "DevOps", "Cloud Computing", "AI/ML", "MERN Stack"];
+
 const Skills = () => {
-  const { ref, isVisible } = useScrollReveal(0.2);
-
   return (
-    <section id="skills" className="py-24 bg-black text-white relative overflow-hidden">
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent/20 rounded-full blur-3xl" />
+    <section className="relative bg-black text-white py-24 overflow-hidden border-t border-white/10" id="skills">
+      {/* Local keyframes (scoped inline so it works without tailwind config edits) */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes orbit-spin { to { transform: rotate(360deg); } }
+        @keyframes orbit-spin-reverse { to { transform: rotate(-360deg); } }
+        @keyframes node-float {
+          0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+          50% { transform: translate(-50%, -50%) translateY(-6px); }
+        }
+        @keyframes pulse-ring {
+          0%, 100% { opacity: 0.25; }
+          50% { opacity: 0.5; }
+        }
+      `}} />
+      
+      {/* Dotted backdrop */}
+      <div
+        className="absolute inset-0 opacity-40 pointer-events-none"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px)",
+          backgroundSize: "22px 22px",
+          maskImage:
+            "radial-gradient(ellipse at center, black 40%, transparent 75%)",
+          WebkitMaskImage:
+            "radial-gradient(ellipse at center, black 40%, transparent 75%)",
+        }}
+      />
+      
+      <div className="container mx-auto px-6 max-w-6xl relative">
+        {/* Header */}
+        <div className="text-center mb-12">
+          <p className="text-xs tracking-[0.3em] text-gray-500 uppercase mb-3">
+            My Expertise
+          </p>
+          <h2 className="text-4xl md:text-5xl font-bold tracking-tight">
+            Technical Skills<span className="text-gray-500">.</span>
+          </h2>
+          <p className="mt-3 text-gray-400 text-sm max-w-md mx-auto">
+            A living orbit of the tools, languages, and frameworks I build with.
+          </p>
+        </div>
 
-      <div className="container mx-auto px-6 relative z-10">
-        <div className="max-w-5xl mx-auto">
-          <motion.div
-            ref={ref}
-            className="text-center mb-16"
-            initial={{ opacity: 0, y: 30 }}
-            animate={isVisible ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6 }}
+        {/* Orbit stage */}
+        <div className="mx-auto relative aspect-square w-full max-w-[720px] flex items-center justify-center">
+          
+          {/* Center node */}
+          <div
+            className="absolute top-1/2 left-1/2 z-20"
+            style={{ animation: "node-float 4s ease-in-out infinite" }}
           >
-            <motion.div
-              className="inline-block mb-4"
-              initial={{ scale: 0 }}
-              animate={isVisible ? { scale: 1 } : {}}
-              transition={{ duration: 0.5, type: "spring" }}
-            >
-              <span className="inline-block px-4 py-2 bg-accent/20 text-accent rounded-full text-sm font-semibold">
-                My Expertise
+            <div className="relative h-28 w-28 md:h-32 md:w-32 rounded-full border border-white/20 bg-black/80 backdrop-blur-sm flex flex-col items-center justify-center shadow-[0_0_60px_rgba(255,255,255,0.08)]">
+              <span className="text-xl md:text-2xl font-bold tracking-tight">Tech</span>
+              <span className="text-[9px] md:text-[10px] tracking-[0.4em] text-gray-300 mt-1">
+                STACK
               </span>
-            </motion.div>
-
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              Technical {" "}
-              <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                Skills
-              </span>
-            </h2>
-            <p className="text-gray-300 text-lg">
-              Technologies I work with to bring ideas to life
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {skillCategories.map((category, idx) => (
-              <motion.div
-                key={category.category}
-                initial={{ opacity: 0, y: 30 }}
-                animate={isVisible ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: idx * 0.15, duration: 0.6 }}
-              >
-                <Card className="p-6 h-full bg-zinc-900 border-zinc-700 hover:border-primary/40 hover:shadow-xl transition-all rounded-xl">
-                  <motion.div
-                    className="mb-6 pb-4 border-b border-zinc-700"
-                    whileHover={{ scale: 1.05 }}
-                  >
-                    <h3 className="text-xl font-bold text-center bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                      {category.category}
-                    </h3>
-                  </motion.div>
-
-                  <div className="space-y-6">
-                    {category.skills.map((skill, skillIdx) => (
-                      <motion.div
-                        key={skill.name}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={isVisible ? { opacity: 1, x: 0 } : {}}
-                        transition={{ delay: idx * 0.15 + skillIdx * 0.1, duration: 0.5 }}
-                      >
-                        <div className="flex justify-between items-center mb-2">
-                          <span className="text-sm font-semibold text-white">
-                            {skill.name}
-                          </span>
-                          <motion.span
-                            className="text-xs font-bold text-primary"
-                            initial={{ opacity: 0 }}
-                            animate={isVisible ? { opacity: 1 } : {}}
-                            transition={{ delay: idx * 0.15 + skillIdx * 0.1 + 0.3 }}
-                          >
-                            {skill.level}%
-                          </motion.span>
-                        </div>
-
-                        <div className="h-2.5 bg-zinc-800 rounded-full overflow-hidden">
-                          <motion.div
-                            className="h-full bg-gradient-to-r from-primary to-accent rounded-full relative"
-                            initial={{ width: 0 }}
-                            animate={isVisible ? { width: `${skill.level}%` } : {}}
-                            transition={{ delay: idx * 0.15 + skillIdx * 0.1 + 0.2, duration: 1 }}
-                          >
-                            <motion.div
-                              className="absolute inset-0 bg-white/20"
-                              animate={{ x: ["-100%", "100%"] }}
-                              transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
-                            />
-                          </motion.div>
-                        </div>
-                      </motion.div>
-                    ))}
-                  </div>
-                </Card>
-              </motion.div>
-            ))}
+              <span className="absolute inset-[-6px] rounded-full border border-white/5" />
+            </div>
           </div>
 
-          <motion.div
-            className="mt-12 text-center"
-            initial={{ opacity: 0, y: 20 }}
-            animate={isVisible ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.8, duration: 0.6 }}
-          >
-            <p className="text-gray-400">
-              Also exploring:{" "}
-              {["DSA", "System Design", "DevOps & Cloud-Computing"].map((item, index) => (
-                <motion.span
-                  key={item}
-                  className="text-primary font-semibold"
-                  initial={{ opacity: 0 }}
-                  animate={isVisible ? { opacity: 1 } : {}}
-                  transition={{ delay: 1 + index * 0.1 }}
-                >
-                  {item}
-                  {index < 2 && ", "}
-                </motion.span>
-              ))}
-            </p>
-          </motion.div>
+          {/* Guide Rings */}
+          {rings.map((r) => {
+            const sizePct = r.radiusPct * 2 * 100;
+            return (
+              <div
+                key={`ring-${r.radiusPct}`}
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/20 pointer-events-none"
+                style={{
+                  width: `${sizePct}%`,
+                  height: `${sizePct}%`,
+                  animation: "pulse-ring 6s ease-in-out infinite",
+                }}
+              />
+            );
+          })}
+
+          {/* Rotating Orbits */}
+          {rings.map((ring) => {
+            return (
+              <div
+                key={`orbit-${ring.radiusPct}`}
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  animation: `${
+                    ring.reverse ? "orbit-spin-reverse" : "orbit-spin"
+                  } ${ring.duration}s linear infinite`,
+                }}
+              >
+                {ring.items.map((tech, i) => {
+                  const angle = (2 * Math.PI * i) / ring.items.length - Math.PI / 2;
+                  // Center offset percentages relative to the stage itself
+                  const x = 50 + Math.cos(angle) * ring.radiusPct * 100;
+                  const y = 50 + Math.sin(angle) * ring.radiusPct * 100;
+                  return (
+                    <div
+                      key={tech.name}
+                      className="absolute pointer-events-auto"
+                      style={{
+                        left: `${x}%`,
+                        top: `${y}%`,
+                        transform: "translate(-50%, -50%)",
+                      }}
+                    >
+                      {/* Counter-rotation to keep the icons upright */}
+                      <div
+                        style={{
+                          animation: `${
+                            ring.reverse ? "orbit-spin" : "orbit-spin-reverse"
+                          } ${ring.duration}s linear infinite`,
+                        }}
+                      >
+                        <div className="group relative">
+                          <div className="h-14 w-14 md:h-16 md:w-16 rounded-full border border-white/15 bg-black hover:bg-white/[0.08] hover:border-white/40 transition-all duration-300 flex items-center justify-center shadow-[0_4px_20px_rgba(0,0,0,0.6)] hover:scale-110 cursor-pointer">
+                            <img
+                              src={tech.src}
+                              alt={tech.name}
+                              loading="lazy"
+                              className="h-7 w-7 md:h-9 md:w-9 object-contain"
+                              style={
+                                tech.invert
+                                  ? { filter: "invert(1) brightness(2)" }
+                                  : undefined
+                              }
+                            />
+                          </div>
+                          {/* Tooltip */}
+                          <span className="pointer-events-none absolute left-1/2 top-full mt-2 -translate-x-1/2 whitespace-nowrap rounded-md border border-white/10 bg-black/90 px-2 py-1 text-[9px] md:text-[10px] uppercase tracking-widest text-gray-300 opacity-0 group-hover:opacity-100 transition-opacity z-30">
+                            {tech.name}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            );
+          })}
+        </div>
+        
+        {/* Footnote */}
+        <div className="mt-12 flex flex-wrap items-center justify-center gap-4">
+          <span className="text-xs uppercase tracking-widest text-gray-500">
+            
+          </span>
+          <div className="flex flex-wrap gap-3">
+            {alsoExploring.map((item) => (
+              <span
+                key={item}
+                className="px-3 py-1 text-xs rounded-full border border-white/10 text-gray-300 hover:border-white/30 hover:text-white transition-colors"
+              >
+                {item}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
     </section>

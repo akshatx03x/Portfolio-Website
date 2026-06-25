@@ -1,20 +1,12 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
 import { ArrowDown } from "lucide-react";
 import Spline from "@splinetool/react-spline";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-
 const textVariant = {
   hidden: { opacity: 0, y: 20 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6 },
-  },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6 } },
 };
-
 const letterVariant = {
   hidden: { opacity: 0, y: 30 },
   show: (i: number) => ({
@@ -23,47 +15,31 @@ const letterVariant = {
     transition: { delay: i * 0.06, duration: 0.5 },
   }),
 };
-
 const Hero = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [showSpline, setShowSpline] = useState(false);
-
   useEffect(() => {
     if (window.innerWidth < 768) {
       setIsMobile(true);
-
-      // ⭐ DELAY SPLINE LOAD ON MOBILE (actual performance fix)
-      setTimeout(() => {
-        setShowSpline(true);
-      }, 1000); // 1 second delay
+      setTimeout(() => setShowSpline(true), 1000);
     } else {
-      setShowSpline(true); // desktop loads immediately
+      setShowSpline(true);
     }
   }, []);
-
   const scrollToSection = (sectionId: string) => {
     const el = document.getElementById(sectionId);
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   };
-
-  const heading = "Akshat";
-
+  const lastName = "Gupta";
   return (
-    <section className="relative w-full min-h-screen flex items-center overflow-hidden px-6 pt-20 bg-black">
-
+    <section className="relative min-h-screen w-full overflow-hidden bg-black text-white">
       {/* Background Layer */}
-      <div className="absolute inset-0 w-full h-full pointer-events-auto">
-
-        {/* 👉 MOBILE INITIAL PLACEHOLDER (fixes freezing/lags) */}
+      <div className="absolute inset-0 z-0">
         {!showSpline && (
-          <div className="w-full h-full bg-gradient-to-b from-black to-gray-900 flex items-center justify-center">
-            <p className="text-gray-400 text-sm tracking-widest">
-              Loading 3D Scene...
-            </p>
+          <div className="flex h-full w-full items-center justify-center bg-black">
+            <p className="text-sm tracking-widest text-zinc-500">LOADING 3D SCENE…</p>
           </div>
         )}
-
-        {/* 👉 REAL SPLINE SCENE (loads after delay on mobile) */}
         {showSpline && (
           <Spline
             scene={
@@ -71,39 +47,37 @@ const Hero = () => {
                 ? "https://prod.spline.design/LHYkVvonZ-djY-TM/scene.splinecode?quality=low"
                 : "https://prod.spline.design/LHYkVvonZ-djY-TM/scene.splinecode"
             }
-            className={`w-full h-full transition-all duration-700 ${
-              isMobile ? "scale-[0.8] opacity-85" : "scale-100 opacity-100"
-            }`}
+            className="h-full w-full"
           />
         )}
+        {/* Soft vignette so text stays readable — flat, not gradient brand color */}
+        <div className="pointer-events-none absolute inset-0 bg-black/40 md:bg-black/20" />
       </div>
-
       {/* Content */}
-      <div className="relative z-20 max-w-3xl space-y-10 pointer-events-none">
-        <motion.p
+      <div className="pointer-events-none relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col justify-center px-6 md:px-12">
+        <motion.span
           variants={textVariant}
           initial="hidden"
           animate="show"
-          className="text-sm uppercase tracking-[0.3em] text-gray-400"
+          className="mb-6 inline-block w-fit border-l-2 border-white/60 pl-3 text-xs uppercase tracking-[0.3em] text-zinc-400"
         >
-          Welcome to my world
-        </motion.p>
-
-        {/* Main Heading */}
-        <motion.h1
-          className={`font-black leading-tight flex gap-4 text-white ${
-            isMobile ? "text-[2.8rem]" : "text-[4rem] md:text-[5rem]"
-          }`}
-        >
-          <motion.span initial="hidden" animate="show" className="flex">
-            I'm
-          </motion.span>
-
-          <motion.span className="bg-gradient-to-r from-cyan-400 via-purple-500 to-slate-800 bg-clip-text text-transparent flex">
-            {heading.split("").map((letter, i) => (
+          Engineer · Designer · Builder
+        </motion.span>
+        {/* Main Heading — flat white, no gradient */}
+        <div className="flex flex-wrap items-baseline gap-x-4">
+          <motion.h1
+            variants={textVariant}
+            initial="hidden"
+            animate="show"
+            className="text-6xl font-bold tracking-tight text-white md:text-8xl"
+          >
+            Akshat
+          </motion.h1>
+          <h1 className="text-6xl font-bold tracking-tight text-zinc-500 md:text-8xl">
+            {lastName.split("").map((letter, i) => (
               <motion.span
                 key={i}
-                custom={i}
+                custom={i + 3}
                 variants={letterVariant}
                 initial="hidden"
                 animate="show"
@@ -112,73 +86,66 @@ const Hero = () => {
                 {letter}
               </motion.span>
             ))}
-          </motion.span>
-        </motion.h1>
-
-        {/* Subheading */}
+          </h1>
+        </div>
+        {/* Subheading — new content */}
         <motion.p
           variants={textVariant}
           initial="hidden"
           animate="show"
-          transition={{ delay: 0.4 }}
-          className="text-xl text-gray-300 max-w-xl leading-relaxed"
+          transition={{ delay: 0.4, duration: 0.6 }}
+          className="mt-8 max-w-xl text-base leading-relaxed text-zinc-400 md:text-lg"
         >
-          I craft <span className="text-gray-400">interactive</span> web experiences
-          and build intelligent AI systems that come alive on your screen.
+          I design and ship products at the intersection of code, motion, and machine
+          intelligence — focused, fast, and built to feel inevitable.
         </motion.p>
-
-        {/* Buttons */}
+        {/* Buttons — solid, no gradient */}
         <motion.div
-          className="flex gap-4 pt-2 pointer-events-auto"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8 }}
+          variants={textVariant}
+          initial="hidden"
+          animate="show"
+          transition={{ delay: 0.6, duration: 0.6 }}
+          className="mt-10 flex flex-wrap gap-3"
         >
           <Button
-            size="lg"
-            className="px-8 font-semibold shadow-xl hover:scale-[1.03] transition-transform
-            bg-gradient-to-r from-cyan-500 to-purple-600 text-white border border-white/20
-            hover:from-cyan-400 hover:to-purple-500"
             onClick={() => scrollToSection("portfolio")}
+            className="rounded-full bg-white px-7 py-6 text-sm font-medium text-black hover:bg-zinc-200"
           >
-            View My Work
+            View Projects
           </Button>
-
           <Button
-            size="lg"
             variant="outline"
-            className="px-8 font-semibold border-2
-            bg-gradient-to-r from-cyan-500 to-purple-600 bg-clip-text text-transparent
-            border-cyan-500/40 hover:bg-white hover:text-white transition"
             onClick={() => {
-              const link = document.createElement('a');
-              link.href = '/Akshat Resume.pdf';
-              link.download = 'Akshat Resume.pdf';
+              const link = document.createElement("a");
+              link.href = "/Akshat Resume.pdf";
+              link.download = "Akshat Resume.pdf";
               document.body.appendChild(link);
               link.click();
               document.body.removeChild(link);
             }}
+            className="rounded-full border-zinc-700 bg-transparent px-7 py-6 text-sm font-medium text-white hover:bg-white/5 hover:text-white"
           >
-            Download CV
+            Download Resume
           </Button>
         </motion.div>
       </div>
-
       {/* Scroll Indicator */}
-      <motion.div
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 text-gray-400 flex flex-col items-center gap-2 cursor-pointer pointer-events-auto"
+      <motion.button
         onClick={() => scrollToSection("about")}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.4 }}
+        className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2 text-xs uppercase tracking-[0.3em] text-zinc-500 hover:text-white"
       >
-        <span className="text-xs tracking-wider">SCROLL</span>
-        <motion.div animate={{ y: [0, 10, 0] }} transition={{ repeat: Infinity, duration: 1.2 }}>
-          <ArrowDown className="w-5 h-5" />
+        Scroll
+        <motion.div
+          animate={{ y: [0, 6, 0] }}
+          transition={{ duration: 1.6, repeat: Infinity }}
+        >
+          <ArrowDown className="h-4 w-4" />
         </motion.div>
-      </motion.div>
+      </motion.button>
     </section>
   );
 };
-
 export default Hero;

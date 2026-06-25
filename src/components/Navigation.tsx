@@ -1,101 +1,71 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
-
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
+    if (element) element.scrollIntoView({ behavior: "smooth", block: "start" });
   };
-
   const navLinks = [
-    { name: "Portfolio", id: "portfolio" },
-    { name: "About Me", id: "about" },
+    { name: "About", id: "about" },
+    { name: "Projects", id: "portfolio" },
     { name: "Skills", id: "skills" },
     { name: "Contact", id: "contact" },
   ];
-
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out
-        ${
-          isScrolled
-            ? "bg-black/70 backdrop-blur-xl border-b border-white/10 shadow-2xl shadow-black/50"
-            : "bg-transparent"
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
+          ? "border-b border-zinc-900 bg-black/80 backdrop-blur-md"
+          : "border-b border-transparent bg-transparent"
         }`}
     >
-      <div className="container mx-auto px-6 py-5">
-        <div className="flex items-center justify-between">
-          {/* Logo */}
-          <button onClick={() => scrollToSection("home")} className="relative group">
-            <div className="text-4xl font-black tracking-tighter">
-              <span
-                className="bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 bg-clip-text text-transparent 
-                drop-shadow-lg group-hover:drop-shadow-2xl transition-all duration-300"
-              >
-                A
-              </span>
-              <span
-                className="absolute -inset-2 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-full blur-xl 
-                opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-              />
-            </div>
-          </button>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-10">
-            {navLinks.map((link) => (
-              <button
-                key={link.id}
-                onClick={() => scrollToSection(link.id)}
-                className="relative text-gray-300 font-medium text-sm tracking-wide
-                  after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 
-                  after:bg-gradient-to-r after:from-cyan-400 after:to-purple-500 
-                  after:transition-all after:duration-300
-                  hover:text-white hover:after:w-full
-                  transition-colors duration-300"
-              >
-                {link.name}
-                <span className="absolute -inset-1 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 rounded-lg blur-xl opacity-0 hover:opacity-100 transition-opacity" />
-              </button>
-            ))}
-          </div>
-
-          {/* CTA Button */}
-          <div className="flex items-center gap-4">
-            <Button
-              variant="default"
-              size="lg"
-              onClick={() => scrollToSection("contact")}
-              className="bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-400 hover:to-purple-500 
-                text-white font-semibold shadow-lg hover:shadow-cyan-500/25 
-                border border-white/20 hover:border-white/40
-                transition-all duration-300 hover:scale-105"
+      <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 md:px-12">
+        {/* Logo */}
+        <button
+          onClick={() => scrollToSection("home")}
+          className="group flex items-center gap-2"
+          aria-label="Home"
+        >
+          <span className="hidden text-sm font-medium tracking-wide text-zinc-300 group-hover:text-white sm:inline">
+            Akshat Gupta
+          </span>
+        </button>
+        {/* Desktop Navigation */}
+        <div className="hidden items-center gap-8 md:flex">
+          {navLinks.map((link) => (
+            <button
+              key={link.id}
+              onClick={() => scrollToSection(link.id)}
+              className="relative text-sm font-medium tracking-wide text-zinc-400 transition-colors duration-200 hover:text-white
+                after:absolute after:-bottom-1 after:left-0 after:h-px after:w-0 after:bg-white after:transition-all after:duration-300 hover:after:w-full"
             >
-              Let's Connect
-            </Button>
-
-            {/* Mobile Menu Icon */}
-            <button className="md:hidden text-white">
-              <Menu className="w-6 h-6" />
+              {link.name}
             </button>
-          </div>
+          ))}
         </div>
-      </div>
-    </nav>
+        {/* CTA + Mobile menu */}
+        <div className="flex items-center gap-3">
+          <Button
+            onClick={() => scrollToSection("contact")}
+            className="hidden rounded-full bg-white px-5 text-sm font-medium text-black hover:bg-zinc-200 md:inline-flex"
+          >
+            Let's Connect
+          </Button>
+          <button
+            className="flex h-9 w-9 items-center justify-center rounded-md border border-zinc-800 text-zinc-300 hover:border-zinc-600 hover:text-white md:hidden"
+            aria-label="Open menu"
+          >
+            <Menu className="h-4 w-4" />
+          </button>
+        </div>
+      </nav>
+    </header>
   );
 };
-
 export default Navigation;

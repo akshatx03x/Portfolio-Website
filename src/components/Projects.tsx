@@ -1,42 +1,46 @@
 import { useState } from "react";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { ExternalLink, Github, Star } from "lucide-react";
+import { ArrowUpRight, Github, Star } from "lucide-react";
 import { motion } from "framer-motion";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
-
-const projects = [
-    {
+type Project = {
+  id: number;
+  name: string;
+  description: string;
+  tags: string[];
+  stars: number;
+  featured: boolean;
+  githubUrl: string;
+  demoUrl: string;
+};
+const projects: Project[] = [
+  {
     id: 1,
     name: "ConvoSpace",
     description:
       "Collaboration platform with WebRTC video calls, file sharing, notepads and AI assistance using Gemini + OpenAI.",
-    tags: ["JavaScript"],
+    tags: ["WebRTC", "AI", "MERN"],
     stars: 1,
     featured: true,
     githubUrl: "https://github.com/akshatx03x/ConvoSpace",
     demoUrl: "https://convospace-mu.vercel.app",
   },
-    {
+  {
     id: 2,
     name: "CodeCollab",
     description:
-      "CodeCollab is a real-time collaborative coding platform that allows multiple developers to write and edit code together seamlessly. Built with modern web technologies, it focuses on speed, simplicity, and efficient teamwork",
-    tags: ["JavaScript"],
+      "Real-time collaborative coding platform where multiple developers can write and edit code together seamlessly.",
+    tags: ["Realtime", "MERN"],
     stars: 1,
     featured: true,
     githubUrl: "https://github.com/akshatx03x/CodeCollab",
     demoUrl: "https://code-collab-eta-five.vercel.app/",
   },
-
-
   {
     id: 3,
     name: "GemScribe",
     description:
-      "GemScribe is an AI-powered tool designed to generate clean, well-structured README files using Gemini 2.0. It helps developers quickly create professional documentation by transforming project details into clear and consistent README content..",
-    tags: ["JavaScript"],
+      "AI-powered tool that generates clean, well-structured README files using Gemini 2.0 from minimal project details.",
+    tags: ["AI", "Gemini API"],
     stars: 1,
     featured: true,
     githubUrl: "https://github.com/akshatx03x/GemScribe",
@@ -45,8 +49,9 @@ const projects = [
   {
     id: 4,
     name: "UrbanCart",
-    description: "UrbanCart is a modern e-commerce web application with product browsing, cart management, an admin dashboard, and sales analytics with graphs. Built using modern web technologies, it focuses on performance and scalability.",
-    tags: ["JavaScript"],
+    description:
+      "Modern e-commerce app with product browsing, cart management, admin dashboard, and sales analytics with graphs.",
+    tags: ["MERN", "Dashboard"],
     stars: 1,
     featured: true,
     githubUrl: "https://github.com/akshatx03x/UrbanCart",
@@ -55,8 +60,9 @@ const projects = [
   {
     id: 5,
     name: "NextImgKit",
-    description: "NextImgkit is a Next.js media management project built with ImageKit, enabling AI-powered image and video editing, optimization, and high-performance delivery.",
-    tags: ["JavaScript"],
+    description:
+      "Next.js media platform built with ImageKit — AI-powered image/video editing, optimization, and fast delivery.",
+    tags: ["Next.js", "AI"],
     stars: 1,
     featured: true,
     githubUrl: "https://github.com/akshatx03x/NextImgkit",
@@ -65,215 +71,167 @@ const projects = [
   {
     id: 6,
     name: "Chatlify",
-    description: "Chat application with real-time messaging features",
-    tags: ["JavaScript"],
+    description: "Chat application with real-time messaging, presence, and clean conversational UI.",
+    tags: ["Realtime", "MERN"],
     stars: 1,
     featured: true,
     githubUrl: "https://github.com/akshatx03x/Chatlify",
     demoUrl: "https://chatlify-dosw.onrender.com/",
   },
 ];
-
+// Local project preview mockup images
+const previewUrl = (name: string) => `/projects/${name.toLowerCase()}.png`;
+const filters = [
+  { label: "All", value: "all" },
+  { label: "Web Apps", value: "web" },
+  { label: "AI / ML", value: "ai" },
+  { label: "Realtime", value: "realtime" },
+];
 const Projects = () => {
   const [filter, setFilter] = useState("all");
-  const { ref, isVisible } = useScrollReveal(0.2);
-
-  const filteredProjects = projects.filter((project) => {
+  const { ref, isVisible } = useScrollReveal(0.15);
+  const filteredProjects = projects.filter((p) => {
     if (filter === "all") return true;
-    if (filter === "web") return project.tags.some((t) => ["React", "Next.js", "MERN"].includes(t));
-    if (filter === "mobile") return project.tags.includes("React Native");
-    if (filter === "ai") return project.tags.includes("AI") || project.tags.includes("Gemini API");
+    if (filter === "web") return p.tags.some((t) => ["MERN", "Next.js", "Dashboard"].includes(t));
+    if (filter === "ai") return p.tags.some((t) => ["AI", "Gemini API"].includes(t));
+    if (filter === "realtime") return p.tags.includes("Realtime") || p.tags.includes("WebRTC");
     return true;
   });
-
   return (
-    <section id="portfolio" className="py-3 bg-black text-white relative overflow-hidden">
-      {/* Glowing Background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 -left-40 w-[450px] h-[450px] bg-cyan-600/20 blur-[180px] rounded-full" />
-        <div className="absolute bottom-20 -right-40 w-[400px] h-[400px] bg-purple-600/20 blur-[170px] rounded-full" />
-      </div>
-
-      <div className="container mx-auto px-6 relative z-10">
-        <div className="max-w-6xl mx-auto">
-
-          {/* Header */}
-          <motion.div
-            ref={ref}
-            className="text-center mb-20"
-            initial={{ opacity: 0, y: 40 }}
-            animate={isVisible ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8 }}
-          >
-            <motion.div
-              className="inline-block mb-6"
-              initial={{ scale: 0 }}
-              animate={isVisible ? { scale: 1 } : {}}
-              transition={{ duration: 0.6, type: "spring", stiffness: 200 }}
-            >
-              <span className="px-6 py-3 bg-white/5 backdrop-blur-md border border-white/10 text-cyan-400 rounded-full text-sm font-bold shadow-lg">
-                My Work
-              </span>
-            </motion.div>
-
-            <h2 className="text-5xl md:text-7xl font-black mb-6 bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-              Featured <span className="text-white drop-shadow-[0_0_10px_#00eaff]">Projects</span>
+    <section
+      id="portfolio"
+      ref={ref as React.RefObject<HTMLElement>}
+      className="relative bg-black py-28 text-white"
+    >
+      <div className="mx-auto max-w-7xl px-6 md:px-12">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isVisible ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className="flex flex-col items-start justify-between gap-8 border-b border-zinc-900 pb-10 md:flex-row md:items-end"
+        >
+          <div>
+            <span className="text-xs uppercase tracking-[0.3em] text-zinc-500">
+              Selected Work · 2024 – 2026
+            </span>
+            <h2 className="mt-4 text-4xl font-bold tracking-tight text-white md:text-6xl">
+              Things I've built.
             </h2>
-
-            <p className="text-gray-300 text-lg max-w-2xl mx-auto">
-              Designed with passion. Built with precision.
+            <p className="mt-4 max-w-xl text-zinc-400">
+              A mix of full-stack apps, real-time tools, and AI experiments. Each one shipped,
+              live, and built end-to-end.
             </p>
-
-            {/* Filters */}
-            <motion.div
-              className="flex flex-wrap justify-center gap-4 mt-12"
-              initial={{ opacity: 0, y: 30 }}
-              animate={isVisible ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.3 }}
-            >
-              {[
-                { label: "All Projects", value: "all" },
-                { label: "Web Apps", value: "web" },
-                { label: "Mobile Apps", value: "mobile" },
-                { label: "AI/ML", value: "ai" },
-              ].map((btn) => (
-                <motion.button
-                  key={btn.value}
-                  onClick={() => setFilter(btn.value)}
-                  className={`px-7 py-2.5 rounded-full font-medium transition-all duration-300 backdrop-blur-md border
-                    ${
-                      filter === btn.value
-                        ? "bg-gradient-to-r from-cyan-500 to-purple-600 text-white shadow-lg shadow-cyan-500/50 border-transparent"
-                        : "bg-white/5 text-gray-300 border-white/10 hover:bg-white/10 hover:border-cyan-500/40"
-                    }`}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.9 }}
-                >
-                  {btn.label}
-                </motion.button>
-              ))}
-            </motion.div>
-          </motion.div>
-
-          {/* Project Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 place-items-center">
-            {filteredProjects.map((project, idx) => (
-              <motion.a
-                key={project.id}
-                href={project.demoUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                initial={{ opacity: 0, y: 40 }}
-                animate={isVisible ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: idx * 0.15, duration: 0.7, ease: "easeOut" }}
-                whileHover={{ y: -10 }}
-                className="group"
+          </div>
+          {/* Filters */}
+          <div className="flex flex-wrap gap-2">
+            {filters.map((btn) => (
+              <button
+                key={btn.value}
+                onClick={() => setFilter(btn.value)}
+                className={`rounded-full border px-4 py-2 text-xs font-medium uppercase tracking-wider transition-colors ${
+                  filter === btn.value
+                    ? "border-white bg-white text-black"
+                    : "border-zinc-800 text-zinc-400 hover:border-zinc-600 hover:text-white"
+                }`}
               >
-                <Card className="h-96 bg-white/5 border border-white/10 backdrop-blur-xl rounded-xl p-6 shadow-xl transition-all duration-500 hover:bg-white/10 hover:border-cyan-500/40 hover:shadow-cyan-500/30 overflow-hidden relative">
-                  
-                  {/* Glow Bar */}
-                  <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-cyan-500 to-purple-600 opacity-60" />
-
-                  <div className="flex flex-col h-full">
-                    {/* Title */}
-                    <div className="flex items-start justify-between mb-4">
-                      <h3 className="text-2xl font-semibold text-slate-300 group-hover:text-cyan-400 transition-colors">
-                        {project.name}
-                      </h3>
-
-                      {project.featured && (
-                        <Badge className="bg-cyan-500/20 text-cyan-300 border border-cyan-500/40">
-                          <Star className="w-3 h-3 fill-cyan-400 mr-1" /> Featured
-                        </Badge>
-                      )}
-                    </div>
-
-                    {/* Description */}
-                    <p className="text-gray-400 text-sm leading-relaxed mb-4 line-clamp-4">
-                      {project.description}
-                    </p>
-
-                    {/* Tags */}
-                    <div className="flex flex-wrap gap-2 mb-6">
-                      {project.tags.map((tag) => (
-                        <Badge
-                          key={tag}
-                          variant="outline"
-                          className="text-xs bg-white/5 border-white/20 text-gray-300 hover:bg-cyan-500/20 hover:border-cyan-500/40 transition-all"
-                        >
-                          {tag}
-                        </Badge>
-                      ))}
-                    </div>
-
-                    {/* Footer */}
-                    <div className="mt-auto pt-4 border-t border-white/10 flex items-center justify-between">
-                      <div className="flex items-center gap-2 text-cyan-400">
-                        <Star className="w-5 h-5 fill-current" />
-                        <span className="font-bold">{project.stars}</span>
-                      </div>
-
-                      <div className="flex gap-2">
-                        <motion.a
-                          href={project.githubUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="p-3 rounded-lg bg-white/10 hover:bg-cyan-500/20 border border-white/10 hover:border-cyan-500/50 transition-all"
-                          whileHover={{ scale: 1.1 }}
-                        >
-                          <Github className="w-5 h-5 text-gray-300" />
-                        </motion.a>
-
-                        {project.demoUrl && (
-                          <motion.a
-                            href={project.demoUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="p-3 rounded-lg bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-400 hover:to-purple-500 text-white shadow-lg hover:shadow-cyan-500/50 transition-all"
-                            whileHover={{ scale: 1.1 }}
-                          >
-                            <ExternalLink className="w-5 h-5" />
-                          </motion.a>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </Card>
-              </motion.a>
+                {btn.label}
+              </button>
             ))}
           </div>
-
-          {/* CTA */}
-          <motion.div
-            className="text-center mt-20"
-            initial={{ opacity: 0, y: 40 }}
-            animate={isVisible ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.8 }}
-          >
-            <p className="text-gray-400 text-lg mb-6">
-              Want to explore more? Check out my GitHub for all projects.
-            </p>
-
-            <Button
-              size="lg"
-              className="bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-400 hover:to-purple-500 text-white font-bold text-lg px-10 py-7 shadow-2xl hover:shadow-cyan-500/40 transition-all duration-300 hover:scale-105"
-              asChild
+        </motion.div>
+        {/* Grid */}
+        <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {filteredProjects.map((project, idx) => (
+            <motion.a
+              key={project.id}
+              href={project.demoUrl}
+              target="_blank"
+              rel="noreferrer"
+              initial={{ opacity: 0, y: 24 }}
+              animate={isVisible ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: idx * 0.07 }}
+              className="group relative flex flex-col overflow-hidden rounded-2xl border border-zinc-900 bg-zinc-950 transition-colors hover:border-zinc-700"
             >
-              <a
-                href="https://github.com/akshatx03x"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3"
-              >
-                <Github className="w-6 h-6" />
-                View Full GitHub Profile
-              </a>
-            </Button>
-          </motion.div>
+              {/* Live Preview */}
+              <div className="relative aspect-[16/10] overflow-hidden border-b border-zinc-900 bg-zinc-900">
+                {/* Browser chrome */}
+                <div className="absolute left-0 right-0 top-0 z-10 flex items-center gap-1.5 border-b border-zinc-800 bg-zinc-950/80 px-3 py-2 backdrop-blur">
+                  <span className="h-2 w-2 rounded-full bg-zinc-700" />
+                  <span className="h-2 w-2 rounded-full bg-zinc-700" />
+                  <span className="h-2 w-2 rounded-full bg-zinc-700" />
+                  <span className="ml-3 truncate text-[10px] text-zinc-500">
+                    {project.demoUrl.replace(/^https?:\/\//, "")}
+                  </span>
+                </div>
+                <img
+                  src={previewUrl(project.name)}
+                  alt={`${project.name} preview`}
+                  loading="lazy"
+                  className="h-full w-full object-cover object-top pt-7 transition-transform duration-700 group-hover:scale-[1.03]"
+                  onError={(e) => {
+                    (e.currentTarget as HTMLImageElement).style.opacity = "0.2";
+                  }}
+                />
+                {/* hover veil */}
+                <div className="pointer-events-none absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/30" />
+                <div className="pointer-events-none absolute bottom-3 right-3 flex h-9 w-9 items-center justify-center rounded-full border border-zinc-700 bg-black/80 text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  <ArrowUpRight className="h-4 w-4" />
+                </div>
+              </div>
+              {/* Body */}
+              <div className="flex flex-1 flex-col gap-4 p-5">
+                <div className="flex items-start justify-between gap-3">
+                  <h3 className="text-lg font-semibold text-white">{project.name}</h3>
+                  <div className="flex items-center gap-1 text-xs text-zinc-500">
+                    <Star className="h-3 w-3" />
+                    {project.stars}
+                  </div>
+                </div>
+                <p className="text-sm leading-relaxed text-zinc-400 line-clamp-3">
+                  {project.description}
+                </p>
+                <div className="mt-auto flex items-center justify-between border-t border-zinc-900 pt-4">
+                  <div className="flex flex-wrap gap-1.5">
+                    {project.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="rounded-full border border-zinc-800 px-2 py-0.5 text-[10px] uppercase tracking-wider text-zinc-400"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      window.open(project.githubUrl, "_blank");
+                    }}
+                    className="rounded-md p-1.5 text-zinc-500 hover:text-white"
+                    aria-label="View source on GitHub"
+                  >
+                    <Github className="h-4 w-4" />
+                  </button>
+                </div>
+              </div>
+            </motion.a>
+          ))}
+        </div>
+        {/* CTA */}
+        <div className="mt-20 flex flex-col items-center gap-4 border-t border-zinc-900 pt-12 text-center">
+          <p className="text-zinc-400">Want to see everything I'm building?</p>
+          <a
+            href="https://github.com/akshatx03x"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-medium text-black transition-colors hover:bg-zinc-200"
+          >
+            <Github className="h-4 w-4" />
+            View Full GitHub Profile
+          </a>
         </div>
       </div>
     </section>
   );
 };
-
 export default Projects;
