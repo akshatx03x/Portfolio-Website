@@ -117,7 +117,7 @@ const Skills = () => {
             style={{ animation: "node-float 4s ease-in-out infinite" }}
           >
             <div className="relative h-28 w-28 md:h-32 md:w-32 rounded-full border border-white/20 bg-black/80 backdrop-blur-sm flex flex-col items-center justify-center shadow-[0_0_60px_rgba(255,255,255,0.08)]">
-              <span className="text-xl md:text-2xl font-bold tracking-tight">Tech</span>
+              <span className="text-xl md:text-2xl font-bold tracking-tight">My Tech</span>
               <span className="text-[9px] md:text-[10px] tracking-[0.4em] text-gray-300 mt-1">
                 STACK
               </span>
@@ -236,6 +236,9 @@ const Skills = () => {
               <GitHubCalendar
                 username="akshatx03x"
                 colorScheme="dark"
+                theme={{
+                  dark: ['#161b22', '#3f3f46', '#71717a', '#d4d4d8', '#ffffff'],
+                }}
                 fontSize={12}
                 blockSize={12}
                 blockMargin={5}

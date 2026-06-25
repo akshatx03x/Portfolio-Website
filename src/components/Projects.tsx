@@ -15,64 +15,64 @@ type Project = {
 const projects: Project[] = [
   {
     id: 1,
+    name: "Savvy",
+    description:
+      "Intelligent web platform leveraging AI to simplify complex workflows and deliver actionable insights.",
+    tags: ["Next.js", "CRM", "AI", "AWS", "Docker"],
+    stars: 1,
+    featured: true,
+    githubUrl: "https://github.com/akshatx03x/Savvy",
+    demoUrl: "https://github.com/akshatx03x/Savvy",
+  },
+  {
+    id: 2,
     name: "ConvoSpace",
     description:
       "Collaboration platform with WebRTC video calls, file sharing, notepads and AI assistance using Gemini + OpenAI.",
-    tags: ["WebRTC", "AI", "MERN"],
+    tags: ["MERN", "WebRTC", "Socket.IO", "AI", "OAuth"],
     stars: 1,
     featured: true,
     githubUrl: "https://github.com/akshatx03x/ConvoSpace",
     demoUrl: "https://convospace-mu.vercel.app",
   },
   {
-    id: 2,
-    name: "CodeCollab",
-    description:
-      "Real-time collaborative coding platform where multiple developers can write and edit code together seamlessly.",
-    tags: ["Realtime", "MERN"],
-    stars: 1,
-    featured: true,
-    githubUrl: "https://github.com/akshatx03x/CodeCollab",
-    demoUrl: "https://code-collab-eta-five.vercel.app/",
-  },
-  {
     id: 3,
-    name: "GemScribe",
-    description:
-      "AI-powered tool that generates clean, well-structured README files using Gemini 2.0 from minimal project details.",
-    tags: ["AI", "Gemini API"],
-    stars: 1,
-    featured: true,
-    githubUrl: "https://github.com/akshatx03x/GemScribe",
-    demoUrl: "https://gem-scribe.vercel.app/",
-  },
-  {
-    id: 4,
     name: "UrbanCart",
     description:
       "Modern e-commerce app with product browsing, cart management, admin dashboard, and sales analytics with graphs.",
-    tags: ["MERN", "Dashboard"],
+    tags: ["Next.Js", "E-Commerce", "Stripe", "PostgreSQL"],
     stars: 1,
     featured: true,
     githubUrl: "https://github.com/akshatx03x/UrbanCart",
     demoUrl: "https://urban-cart-azure.vercel.app/",
   },
   {
-    id: 5,
-    name: "NextImgKit",
+    id: 4,
+    name: "GemScribe",
     description:
-      "Next.js media platform built with ImageKit — AI-powered image/video editing, optimization, and fast delivery.",
-    tags: ["Next.js", "AI"],
+      "AI-powered tool that generates clean, well-structured README files using Gemini 2.0 from minimal project details.",
+    tags: ["MERN", "GitHub", "Gemini API", "OAuth"],
     stars: 1,
     featured: true,
-    githubUrl: "https://github.com/akshatx03x/NextImgkit",
-    demoUrl: "https://imagekit.vercel.app/",
+    githubUrl: "https://github.com/akshatx03x/GemScribe",
+    demoUrl: "https://gemscribe.onrender.com/",
+  },
+  {
+    id: 5,
+    name: "CodeCollab",
+    description:
+      "Real-time collaborative coding platform where multiple developers can write and edit code together seamlessly.",
+    tags: ["MERN", "Socket.IO", "Collaboration"],
+    stars: 1,
+    featured: true,
+    githubUrl: "https://github.com/akshatx03x/CodeCollab",
+    demoUrl: "https://code-collab-eta-five.vercel.app/",
   },
   {
     id: 6,
     name: "Chatlify",
     description: "Chat application with real-time messaging, presence, and clean conversational UI.",
-    tags: ["Realtime", "MERN"],
+    tags: ["Chats", "MERN", "Socket.Io"],
     stars: 1,
     featured: true,
     githubUrl: "https://github.com/akshatx03x/Chatlify",
@@ -80,7 +80,15 @@ const projects: Project[] = [
   },
 ];
 // Local project preview mockup images
-const previewUrl = (name: string) => `/projects/${name.toLowerCase()}.png`;
+const previewMap: Record<string, string> = {
+  "ConvoSpace": "/Convospace.png",
+  "CodeCollab": "/Codecollab.png",
+  "GemScribe": "/Gemscribe.png",
+  "UrbanCart": "/UrbanCart.png",
+  "Savvy": "/Savyy.png",
+  "Chatlify": "/Chatlify.png",
+};
+const previewUrl = (name: string) => previewMap[name] || `/${name}.png`;
 const filters = [
   { label: "All", value: "all" },
   { label: "Web Apps", value: "web" },
@@ -169,9 +177,6 @@ const Projects = () => {
                   alt={`${project.name} preview`}
                   loading="lazy"
                   className="h-full w-full object-cover object-top pt-7 transition-transform duration-700 group-hover:scale-[1.03]"
-                  onError={(e) => {
-                    (e.currentTarget as HTMLImageElement).style.opacity = "0.2";
-                  }}
                 />
                 {/* hover veil */}
                 <div className="pointer-events-none absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/30" />

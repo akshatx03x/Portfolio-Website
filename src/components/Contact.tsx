@@ -227,7 +227,7 @@ const Contact = () => {
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
               </span>
               <p className="text-sm text-zinc-300">
-                Currently available for freelance & internships
+                Building with intention. Shipping with purpose.
               </p>
             </div>
           </motion.div>
