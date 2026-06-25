@@ -105,7 +105,7 @@ const Hero = () => {
           initial="hidden"
           animate="show"
           transition={{ delay: 0.6, duration: 0.6 }}
-          className="mt-10 flex flex-wrap gap-3"
+          className="pointer-events-auto mt-10 flex flex-wrap gap-3"
         >
           <Button
             onClick={() => scrollToSection("portfolio")}
