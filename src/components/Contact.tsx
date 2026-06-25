@@ -24,19 +24,6 @@ const Contact = () => {
   const buildBody = () =>
     `From: ${formData.name} (${formData.email})\n\n${formData.message}`;
   const subject = () => `Message from ${formData.name || "Portfolio Visitor"}`;
-  const handleSendOutlook = () => {
-    window.location.href = `mailto:akshatg.gupta03@gmail.com?subject=${encodeURIComponent(
-      subject()
-    )}&body=${encodeURIComponent(buildBody())}`;
-  };
-  const handleSendGmail = () => {
-    window.open(
-      `https://mail.google.com/mail/?view=cm&fs=1&to=akshatg.gupta03@gmail.com&su=${encodeURIComponent(
-        subject()
-      )}&body=${encodeURIComponent(buildBody())}`,
-      "_blank"
-    );
-  };
   const contactItems = [
     {
       icon: Mail,
@@ -149,19 +136,33 @@ const Contact = () => {
                   Send via
                 </p>
                 <Button
-                  onClick={handleSendGmail}
+                  asChild
                   className="rounded-full bg-white px-5 text-sm font-medium text-black hover:bg-zinc-200"
                 >
-                  <Mail className="mr-2 h-4 w-4" />
-                  Gmail
+                  <a
+                    href={`https://mail.google.com/mail/?view=cm&fs=1&to=akshatg.gupta03@gmail.com&su=${encodeURIComponent(
+                      subject()
+                    )}&body=${encodeURIComponent(buildBody())}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Mail className="mr-2 h-4 w-4" />
+                    Gmail
+                  </a>
                 </Button>
                 <Button
-                  onClick={handleSendOutlook}
+                  asChild
                   variant="outline"
                   className="rounded-full border-zinc-700 bg-transparent px-5 text-sm font-medium text-white hover:bg-white/5 hover:text-white"
                 >
-                  <Mail className="mr-2 h-4 w-4" />
-                  Mail App
+                  <a
+                    href={`mailto:akshatg.gupta03@gmail.com?subject=${encodeURIComponent(
+                      subject()
+                    )}&body=${encodeURIComponent(buildBody())}`}
+                  >
+                    <Mail className="mr-2 h-4 w-4" />
+                    Mail App
+                  </a>
                 </Button>
               </motion.div>
             </div>
