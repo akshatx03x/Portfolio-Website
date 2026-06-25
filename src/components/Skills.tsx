@@ -1,3 +1,5 @@
+import { GitHubCalendar } from 'react-github-calendar';
+
 const icon = (slug: string, variant = "original") =>
   `https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${slug}/${slug}-${variant}.svg`;
 
@@ -205,7 +207,7 @@ const Skills = () => {
         {/* Footnote */}
         <div className="mt-12 flex flex-wrap items-center justify-center gap-4">
           <span className="text-xs uppercase tracking-widest text-gray-500">
-            
+            Also Exploring
           </span>
           <div className="flex flex-wrap gap-3">
             {alsoExploring.map((item) => (
@@ -216,6 +218,29 @@ const Skills = () => {
                 {item}
               </span>
             ))}
+          </div>
+        </div>
+
+        {/* GitHub Contributions Graph */}
+        <div className="mt-32 pt-16 border-t border-white/10 mx-auto max-w-5xl flex flex-col items-center">
+          <div className="text-center mb-10">
+            <h3 className="text-3xl md:text-4xl font-bold tracking-tight">
+              GitHub Contributions<span className="text-gray-500">.</span>
+            </h3>
+            <p className="mt-3 text-gray-400 text-sm">
+              My GitHub contribution activity over the last year.
+            </p>
+          </div>
+          <div className="p-6 md:p-8 rounded-2xl border border-white/10 bg-[#09090b]/80 backdrop-blur-sm w-full overflow-x-auto flex justify-center">
+            <div className="min-w-fit">
+              <GitHubCalendar
+                username="akshatx03x"
+                colorScheme="dark"
+                fontSize={12}
+                blockSize={12}
+                blockMargin={5}
+              />
+            </div>
           </div>
         </div>
       </div>
