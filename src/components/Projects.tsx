@@ -37,28 +37,17 @@ const projects: Project[] = [
   },
   {
     id: 3,
-    name: "UrbanCart",
+    name: "Census System",
     description:
-      "Modern e-commerce app with product browsing, cart management, admin dashboard, and sales analytics with graphs.",
-    tags: ["Next.Js", "E-Commerce", "Stripe", "PostgreSQL"],
+      "Secure, privacy-first caste census prototype supporting transparent data collection, blockchain-based verification, and AI-driven analytics.",
+    tags: ["React", "Vite", "Supabase", "Blockchain", "Dashboard", "AI"],
     stars: 1,
     featured: true,
-    githubUrl: "https://github.com/akshatx03x/UrbanCart",
-    demoUrl: "https://urban-cart-azure.vercel.app/",
+    githubUrl: "https://github.com/akshatx03x/Census-System",
+    demoUrl: "https://census-system-git-main-akshatx03xs-projects.vercel.app/",
   },
   {
     id: 4,
-    name: "GemScribe",
-    description:
-      "AI-powered tool that generates clean, well-structured README files using Gemini 2.0 from minimal project details.",
-    tags: ["MERN", "GitHub", "Gemini API", "OAuth"],
-    stars: 1,
-    featured: true,
-    githubUrl: "https://github.com/akshatx03x/GemScribe",
-    demoUrl: "https://gemscribe.onrender.com/",
-  },
-  {
-    id: 5,
     name: "CodeCollab",
     description:
       "Real-time collaborative coding platform where multiple developers can write and edit code together seamlessly.",
@@ -69,24 +58,36 @@ const projects: Project[] = [
     demoUrl: "https://code-collab-eta-five.vercel.app/",
   },
   {
-    id: 6,
-    name: "Chatlify",
-    description: "Chat application with real-time messaging, presence, and clean conversational UI.",
-    tags: ["Chats", "MERN", "Socket.Io"],
+    id: 5,
+    name: "UrbanCart",
+    description:
+      "Modern e-commerce app with product browsing, cart management, admin dashboard, and sales analytics with graphs.",
+    tags: ["Next.Js", "E-Commerce", "Stripe", "PostgreSQL"],
     stars: 1,
     featured: true,
-    githubUrl: "https://github.com/akshatx03x/Chatlify",
-    demoUrl: "https://chatlify-dosw.onrender.com/",
+    githubUrl: "https://github.com/akshatx03x/UrbanCart",
+    demoUrl: "https://urban-cart-azure.vercel.app/",
+  },
+  {
+    id: 6,
+    name: "GemScribe",
+    description:
+      "AI-powered tool that generates clean, well-structured README files using Gemini 2.0 from minimal project details.",
+    tags: ["MERN", "GitHub", "Gemini API", "OAuth"],
+    stars: 1,
+    featured: true,
+    githubUrl: "https://github.com/akshatx03x/GemScribe",
+    demoUrl: "https://gemscribe.onrender.com/",
   },
 ];
 // Local project preview mockup images
 const previewMap: Record<string, string> = {
   "ConvoSpace": "/Convospace.png",
-  "CodeCollab": "/Codecollab.png",
+  "CodeCollab": "/CodeCOllab (2).png",
   "GemScribe": "/Gemscribe.png",
   "UrbanCart": "/UrbanCart.png",
   "Savvy": "/Savyy.png",
-  "Chatlify": "/Chatlify.png",
+  "Census System": "/Census System.png",
 };
 const previewUrl = (name: string) => previewMap[name] || `/${name}.png`;
 const filters = [
