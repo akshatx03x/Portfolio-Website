@@ -37,21 +37,21 @@ const projects: Project[] = [
   },
   {
     id: 3,
-    name: "Census System",
+    name: "Skribbl",
     description:
-      "Secure, privacy-first caste census prototype supporting transparent data collection, blockchain-based verification, and AI-driven analytics.",
-    tags: ["React", "Vite", "Supabase", "Blockchain", "Dashboard", "AI"],
+      "A real-time multiplayer drawing and guessing game featuring a synchronized canvas, live chat, and a custom room system.",
+    tags: ["React", "Socket.IO", "HTML5 Canvas", "Realtime"],
     stars: 1,
     featured: true,
-    githubUrl: "https://github.com/akshatx03x/Census-System",
-    demoUrl: "https://census-system-git-main-akshatx03xs-projects.vercel.app/",
+    githubUrl: "https://github.com/akshatx03x/Skribbl",
+    demoUrl: "https://github.com/akshatx03x/Skribbl",
   },
   {
     id: 4,
     name: "CodeCollab",
     description:
       "Real-time collaborative coding platform where multiple developers can write and edit code together seamlessly.",
-    tags: ["MERN", "Socket.IO", "Collaboration"],
+    tags: ["MERN", "Socket.IO", "Collaboration", "Realtime"],
     stars: 1,
     featured: true,
     githubUrl: "https://github.com/akshatx03x/CodeCollab",
@@ -62,7 +62,7 @@ const projects: Project[] = [
     name: "UrbanCart",
     description:
       "Modern e-commerce app with product browsing, cart management, admin dashboard, and sales analytics with graphs.",
-    tags: ["Next.Js", "E-Commerce", "Stripe", "PostgreSQL"],
+    tags: ["Next.js", "E-Commerce", "Stripe", "PostgreSQL"],
     stars: 1,
     featured: true,
     githubUrl: "https://github.com/akshatx03x/UrbanCart",
@@ -70,14 +70,47 @@ const projects: Project[] = [
   },
   {
     id: 6,
+    name: "Census System",
+    description:
+      "Secure, privacy-first caste census prototype supporting transparent data collection, blockchain-based verification, and AI-driven analytics.",
+    tags: ["React", "Vite", "Supabase", "Blockchain", "Dashboard", "AI"],
+    stars: 1,
+    featured: true,
+    githubUrl: "https://github.com/akshatx03x/Census-System",
+    demoUrl: "https://census-system-git-main-akshatx03xs-projects.vercel.app/",
+  },
+  {
+    id: 7,
     name: "GemScribe",
     description:
       "AI-powered tool that generates clean, well-structured README files using Gemini 2.0 from minimal project details.",
-    tags: ["MERN", "GitHub", "Gemini API", "OAuth"],
+    tags: ["MERN", "GitHub", "Gemini API", "OAuth", "AI"],
     stars: 1,
     featured: true,
     githubUrl: "https://github.com/akshatx03x/GemScribe",
     demoUrl: "https://gemscribe.onrender.com/",
+  },
+  {
+    id: 8,
+    name: "Chatlify",
+    description:
+      "A real-time chat application built with the MERN stack, featuring a clean UI, end-to-end encryption, and image upload support.",
+    tags: ["MERN", "Socket.IO", "Cloudinary", "Realtime"],
+    stars: 1,
+    featured: true,
+    githubUrl: "https://github.com/akshatx03x/Chatlify",
+    demoUrl: "https://chatlify-dosw.onrender.com/",
+  },
+  {
+    id: 9,
+    name: "NexImgKit",
+    description:
+      "Next.js media management toolkit built with ImageKit, enabling AI-powered image/video editing, optimization, and high-performance delivery.",
+    tags: ["Next.js", "ImageKit", "AI", "Tailwind CSS"],
+    stars: 1,
+    featured: true,
+    githubUrl: "https://github.com/akshatx03x/NextImgkit",
+    demoUrl: "https://imagekit.vercel.app/",
   },
 ];
 // Local project preview mockup images
@@ -88,6 +121,9 @@ const previewMap: Record<string, string> = {
   "UrbanCart": "/UrbanCart.png",
   "Savvy": "/Savyy.png",
   "Census System": "/Census System.png",
+  "Skribbl": "/Skribbl.png",
+  "Chatlify": "/Chatlify.png",
+  "NexImgKit": "/NextImgKit.png",
 };
 const previewUrl = (name: string) => previewMap[name] || `/${name}.png`;
 const filters = [
