@@ -20,15 +20,42 @@ const letterVariant = {
 const Hero = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [showSpline, setShowSpline] = useState(false);
+
   useEffect(() => {
     const isMob = window.innerWidth < 768;
     setIsMobile(isMob);
-    // Defer 3D scene loading until after initial main thread paint
+
+    let loaded = false;
+    const triggerSpline = () => {
+      if (!loaded) {
+        loaded = true;
+        setShowSpline(true);
+      }
+    };
+
+    // Defer heavy 3D engine until main thread is idle or after 2.5s delay
     const timer = setTimeout(() => {
-      setShowSpline(true);
-    }, isMob ? 800 : 250);
-    return () => clearTimeout(timer);
+      if ("requestIdleCallback" in window) {
+        requestIdleCallback(() => triggerSpline());
+      } else {
+        triggerSpline();
+      }
+    }, isMob ? 3500 : 2500);
+
+    // Also load immediately if user interacts
+    const events = ["pointermove", "scroll", "touchstart", "keydown"];
+    const onInteract = () => {
+      triggerSpline();
+      events.forEach((evt) => window.removeEventListener(evt, onInteract));
+    };
+    events.forEach((evt) => window.addEventListener(evt, onInteract, { passive: true }));
+
+    return () => {
+      clearTimeout(timer);
+      events.forEach((evt) => window.removeEventListener(evt, onInteract));
+    };
   }, []);
+
   const scrollToSection = (sectionId: string) => {
     const el = document.getElementById(sectionId);
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -36,20 +63,18 @@ const Hero = () => {
   const lastName = "Gupta";
   return (
     <section className="relative min-h-screen w-full overflow-hidden bg-black text-white">
-      {/* Background Layer */}
-      <div className="absolute inset-0 z-0">
-        {!showSpline && (
-          <div className="flex h-full w-full items-center justify-center bg-black">
-            <p className="text-xs tracking-widest text-zinc-600">LOADING 3D SCENE…</p>
-          </div>
-        )}
+      {/* Ambient background glow & grid while 3D loads */}
+      <div className="absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-zinc-900/50 via-black to-black">
+        <div
+          className="absolute inset-0 opacity-20 pointer-events-none"
+          style={{
+            backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.15) 1px, transparent 1px)",
+            backgroundSize: "28px 28px",
+          }}
+        />
         {showSpline && (
           <Suspense
-            fallback={
-              <div className="flex h-full w-full items-center justify-center bg-black">
-                <p className="text-xs tracking-widest text-zinc-600">LOADING 3D SCENE…</p>
-              </div>
-            }
+            fallback={null}
           >
             <Spline
               scene={
@@ -57,7 +82,7 @@ const Hero = () => {
                   ? "https://prod.spline.design/LHYkVvonZ-djY-TM/scene.splinecode?quality=low"
                   : "https://prod.spline.design/LHYkVvonZ-djY-TM/scene.splinecode"
               }
-              className="h-full w-full"
+              className="h-full w-full opacity-90 transition-opacity duration-1000"
             />
           </Suspense>
         )}
