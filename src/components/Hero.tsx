@@ -1,8 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { ArrowDown } from "lucide-react";
-import Spline from "@splinetool/react-spline";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useState, lazy, Suspense } from "react";
+
+const Spline = lazy(() => import("@splinetool/react-spline"));
+
 const textVariant = {
   hidden: { opacity: 0, y: 20 },
   show: { opacity: 1, y: 0, transition: { duration: 0.6 } },
@@ -19,12 +21,13 @@ const Hero = () => {
   const [isMobile, setIsMobile] = useState(false);
   const [showSpline, setShowSpline] = useState(false);
   useEffect(() => {
-    if (window.innerWidth < 768) {
-      setIsMobile(true);
-      setTimeout(() => setShowSpline(true), 1000);
-    } else {
+    const isMob = window.innerWidth < 768;
+    setIsMobile(isMob);
+    // Defer 3D scene loading until after initial main thread paint
+    const timer = setTimeout(() => {
       setShowSpline(true);
-    }
+    }, isMob ? 800 : 250);
+    return () => clearTimeout(timer);
   }, []);
   const scrollToSection = (sectionId: string) => {
     const el = document.getElementById(sectionId);
@@ -37,20 +40,28 @@ const Hero = () => {
       <div className="absolute inset-0 z-0">
         {!showSpline && (
           <div className="flex h-full w-full items-center justify-center bg-black">
-            <p className="text-sm tracking-widest text-zinc-500">LOADING 3D SCENE…</p>
+            <p className="text-xs tracking-widest text-zinc-600">LOADING 3D SCENE…</p>
           </div>
         )}
         {showSpline && (
-          <Spline
-            scene={
-              isMobile
-                ? "https://prod.spline.design/LHYkVvonZ-djY-TM/scene.splinecode?quality=low"
-                : "https://prod.spline.design/LHYkVvonZ-djY-TM/scene.splinecode"
+          <Suspense
+            fallback={
+              <div className="flex h-full w-full items-center justify-center bg-black">
+                <p className="text-xs tracking-widest text-zinc-600">LOADING 3D SCENE…</p>
+              </div>
             }
-            className="h-full w-full"
-          />
+          >
+            <Spline
+              scene={
+                isMobile
+                  ? "https://prod.spline.design/LHYkVvonZ-djY-TM/scene.splinecode?quality=low"
+                  : "https://prod.spline.design/LHYkVvonZ-djY-TM/scene.splinecode"
+              }
+              className="h-full w-full"
+            />
+          </Suspense>
         )}
-        {/* Soft vignette so text stays readable — flat, not gradient brand color */}
+        {/* Soft vignette so text stays readable */}
         <div className="pointer-events-none absolute inset-0 bg-black/40 md:bg-black/20" />
       </div>
       {/* Content */}

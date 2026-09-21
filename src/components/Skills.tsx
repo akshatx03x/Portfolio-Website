@@ -1,4 +1,8 @@
-import { GitHubCalendar } from 'react-github-calendar';
+import { lazy, Suspense } from 'react';
+
+const GitHubCalendar = lazy(() =>
+  import('react-github-calendar').then((mod) => ({ default: mod.GitHubCalendar }))
+);
 
 const icon = (slug: string, variant = "original") =>
   `https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${slug}/${slug}-${variant}.svg`;
@@ -231,19 +235,21 @@ const Skills = () => {
               My GitHub contribution activity over the last year.
             </p>
           </div>
-          <div className="p-6 md:p-8 rounded-2xl border border-white/10 bg-[#09090b]/80 backdrop-blur-sm w-full overflow-x-auto flex justify-center">
-            <div className="min-w-fit">
-              <GitHubCalendar
-                username="akshatx03x"
-                colorScheme="dark"
-                theme={{
-                  dark: ['#161b22', '#3f3f46', '#71717a', '#d4d4d8', '#ffffff'],
-                }}
-                fontSize={12}
-                blockSize={12}
-                blockMargin={5}
-              />
-            </div>
+          <div className="p-6 md:p-8 rounded-2xl border border-white/10 bg-[#09090b]/80 backdrop-blur-sm w-full overflow-x-auto flex justify-center min-h-[140px] items-center">
+            <Suspense fallback={<div className="text-xs text-zinc-500">Loading GitHub contributions...</div>}>
+              <div className="min-w-fit">
+                <GitHubCalendar
+                  username="akshatx03x"
+                  colorScheme="dark"
+                  theme={{
+                    dark: ['#161b22', '#3f3f46', '#71717a', '#d4d4d8', '#ffffff'],
+                  }}
+                  fontSize={12}
+                  blockSize={12}
+                  blockMargin={5}
+                />
+              </div>
+            </Suspense>
           </div>
         </div>
       </div>

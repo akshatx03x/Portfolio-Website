@@ -115,17 +115,17 @@ const projects: Project[] = [
 ];
 // Local project preview mockup images
 const previewMap: Record<string, string> = {
-  "ConvoSpace": "/Convospace.png",
-  "CodeCollab": "/CodeCOllab (2).png",
-  "GemScribe": "/Gemscribe.png",
-  "UrbanCart": "/UrbanCart.png",
-  "Savvy": "/Savyy.png",
-  "Census System": "/Census System.png",
-  "Skribbl": "/Skribbl.png",
-  "Chatlify": "/Chatlify.png",
-  "NexImgKit": "/NextImgKit.png",
+  "ConvoSpace": "/Convospace.webp",
+  "CodeCollab": "/CodeCOllab (2).webp",
+  "GemScribe": "/Gemscribe.webp",
+  "UrbanCart": "/UrbanCart.webp",
+  "Savvy": "/Savyy.webp",
+  "Census System": "/Census System.webp",
+  "Skribbl": "/Skribbl.webp",
+  "Chatlify": "/Chatlify.webp",
+  "NexImgKit": "/NextImgKit.webp",
 };
-const previewUrl = (name: string) => previewMap[name] || `/${name}.png`;
+const previewUrl = (name: string) => previewMap[name] || `/${name}.webp`;
 const filters = [
   { label: "All", value: "all" },
   { label: "Web Apps", value: "web" },

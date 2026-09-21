@@ -1,21 +1,25 @@
+import { lazy, Suspense } from "react";
 import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
-import About from "@/components/About";
-import Skills from "@/components/Skills";
-import Projects from "@/components/Projects";
-import Contact from "@/components/Contact";
-import Footer from "@/components/Footer";
+
+const About = lazy(() => import("@/components/About"));
+const Projects = lazy(() => import("@/components/Projects"));
+const Skills = lazy(() => import("@/components/Skills"));
+const Contact = lazy(() => import("@/components/Contact"));
+const Footer = lazy(() => import("@/components/Footer"));
 
 const Index = () => {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-black text-white">
       <Navigation />
       <Hero />
-      <About />
-      <Projects />
-      <Skills />
-      <Contact />
-      <Footer />
+      <Suspense fallback={<div className="min-h-[200px] bg-black" />}>
+        <About />
+        <Projects />
+        <Skills />
+        <Contact />
+        <Footer />
+      </Suspense>
     </div>
   );
 };
